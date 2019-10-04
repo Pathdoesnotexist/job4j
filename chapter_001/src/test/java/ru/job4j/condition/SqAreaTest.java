@@ -22,4 +22,6 @@ public class SqAreaTest {
         double out = SqArea.square(inP, inK);
         Assert.assertEquals(exp, out, 0.01);
     }
+
+
 }

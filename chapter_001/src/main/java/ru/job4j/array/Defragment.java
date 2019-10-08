@@ -10,7 +10,7 @@ public class Defragment {
             }
             System.out.print(array[i] + " ");
         }
-        for (int i = content; i < array.length; i++){
+        for (int i = content; i < array.length; i++) {
             array[i] = null;
         }
         return array;

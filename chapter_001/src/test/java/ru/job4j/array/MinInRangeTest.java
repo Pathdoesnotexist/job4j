@@ -38,4 +38,15 @@ public class MinInRangeTest {
                 is(2)
         );
     }
+
+    @Test
+    public void sortSelectedData() {
+        assertThat(
+                MinInRange.findMin(
+                        new int[] {3, 4, 1, 2, 5},
+                        0, 4
+                ),
+                is(1)
+        );
+    }
 }

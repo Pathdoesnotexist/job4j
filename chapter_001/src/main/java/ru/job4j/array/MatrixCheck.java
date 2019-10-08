@@ -7,10 +7,13 @@ public class MatrixCheck {
         boolean result = false;
         for (int cell = 0; cell < board.length; cell++) {
             if (board[cell][cell] == 'X') {
-                if (board[0][cell] == 'X' && board[1][cell] == 'X' && board[2][cell] == 'X' && board[3][cell] == 'X' && board[4][cell] == 'X') {
-                    result = true;
-                } else if (board[cell][0] == 'X' && board[cell][1] == 'X' && board[cell][2] == 'X' && board[cell][3] == 'X' && board[cell][4] == 'X') {
-                    result = true;
+                for (int i = 0; i < board.length; i++) {
+                    if (board[i][cell] == board[cell][cell] || board[cell][i] == board[cell][cell]) {
+                        result = true;
+                    } else {
+                        result = false;
+                        break;
+                    }
                 }
             }
             System.out.println(Arrays.toString(board[cell]));
@@ -48,5 +51,15 @@ public class MatrixCheck {
         };
         boolean lose = isWin(notWin);
         System.out.println("A board has a winner : " + lose);
+        System.out.println();
+        char[][] notWin2 = {
+                {'_', '_', '_', 'X', '_'},
+                {'_', '_', '_', 'X', '_'},
+                {'_', '_', '_', 'X', '_'},
+                {'_', '_', '_', 'X', '_'},
+                {'_', '_', '_', '_', 'X'},
+        };
+        boolean lose2 = isWin(notWin2);
+        System.out.println("A board has a winner : " + lose2);
     }
 }

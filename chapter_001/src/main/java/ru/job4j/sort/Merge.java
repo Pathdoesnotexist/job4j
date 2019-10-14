@@ -7,32 +7,22 @@ import java.util.Arrays;
 public class Merge {
     public int[] merge(int[] left, int[] right) {
         int[] result = new int[left.length + right.length];
-//        int index = 0;
-//        for (int li = 0 ; li < left.length; li++){
-//            result[index] = left[li];
-//            index++;
-//        }
-//        for (int ri = 0 ; ri < right.length; ri++){
-//            result[index] = right[ri];
-//            index++;
-//        }
-//        SortSelected.sort(result);
         int index = 0, ri = 0, li = 0;
-        while (li < left.length && ri < right.length) {
-            if (left[li] <= right[ri]) {
+        while (index < result.length) {
+            if (li < left.length && ri < right.length && left[li] <= right[ri]) {
                 result[index] = left[li];
                 li++;
-            } else if (right[ri] < left[li]) {
+            } else if (li < left.length && ri < right.length && right[ri] < left[li]) {
                 result[index] = right[ri];
                 ri++;
+            } else if (li == left.length) {
+                result[index] = right[ri];
+                ri++;
+            } else {
+                result[index] = left[li];
+                li++;
             }
             index++;
-        }
-        int[] tail = (li == left.length) ? right : left;
-        int tailIndex = (li == left.length) ? ri : li;
-        for (int i = index; i < result.length; i++) {
-              result[i] = tail[tailIndex];
-              tailIndex++;
         }
         return result;
     }
@@ -53,4 +43,3 @@ public class Merge {
         System.out.println(Arrays.toString(rsl2));
     }
 }
-

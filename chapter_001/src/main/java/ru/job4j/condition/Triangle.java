@@ -1,14 +1,12 @@
 package ru.job4j.condition;
 
 public class Triangle {
-    private Point firstPoint;
-    private Point secondPoint;
-    private Point thirdPoint;
+    private double ab, bc, ac;
 
     public Triangle(Point ap, Point bp, Point cp) {
-        this.firstPoint = ap;
-        this.secondPoint = bp;
-        this.thirdPoint = cp;
+        this.ab = ap.distance(bp);
+        this.bc = bp.distance(cp);
+        this.ac = ap.distance(cp);
     }
 
     /**
@@ -16,10 +14,7 @@ public class Triangle {
      * @return false - если фигура точка или отрезок. true - треугольник
      */
     public boolean exist() {
-        double ab =  firstPoint.distance(secondPoint);
-        double bc =  secondPoint.distance(thirdPoint);
-        double ac =  thirdPoint.distance(firstPoint);
-        return ab != 0 && bc != 0 && ac != 0;
+        return ab + bc > ac && bc + ac > ab && ab + ac > bc;
     }
 
     /**
@@ -28,9 +23,6 @@ public class Triangle {
      */
     public double period() {
         if (this.exist()) {
-            double ab = firstPoint.distance(secondPoint);
-            double bc = secondPoint.distance(thirdPoint);
-            double ac = thirdPoint.distance(firstPoint);
             return ab + bc + ac;
         } else {
             return -1;
@@ -43,9 +35,6 @@ public class Triangle {
      */
     public double area() {
         if (this.exist()) {
-            double ab = firstPoint.distance(secondPoint);
-            double bc = firstPoint.distance(thirdPoint);
-            double ac = secondPoint.distance(thirdPoint);
             double p = this.period()/2;
         return Math.sqrt(p * (p - ab) * (p - bc) * (p - ac));
         } else {
@@ -69,6 +58,14 @@ public class Triangle {
         System.out.println(exampleTwo.exist());
         System.out.println(exampleTwo.area());
         System.out.println(exampleTwo.period());
+
+        Point a3 = new Point(0,0);
+        Point b3 = new Point(1,1);
+        Point c3 = new Point(5,5);
+        Triangle exampleThree = new Triangle(a3, b3, c3);
+        System.out.println(exampleThree.exist());
+        System.out.println(exampleThree.area());
+        System.out.println(exampleThree.period());
     }
 }
 

@@ -1,12 +1,15 @@
 package ru.job4j.condition;
 
 public class Triangle {
+    private Point firstPoint;
+    private Point secondPoint;
+    private Point thirdPoint;
     private double ab, bc, ac;
 
     public Triangle(Point ap, Point bp, Point cp) {
-        this.ab = ap.distance(bp);
-        this.bc = bp.distance(cp);
-        this.ac = ap.distance(cp);
+        this.firstPoint = ap;
+        this.secondPoint = bp;
+        this.thirdPoint = cp;
     }
 
     /**
@@ -14,6 +17,9 @@ public class Triangle {
      * @return false - если фигура точка или отрезок. true - треугольник
      */
     public boolean exist() {
+        this.ab = firstPoint.distance(secondPoint);
+        this.bc = secondPoint.distance(thirdPoint);
+        this.ac = thirdPoint.distance(firstPoint);
         return ab + bc > ac && bc + ac > ab && ab + ac > bc;
     }
 

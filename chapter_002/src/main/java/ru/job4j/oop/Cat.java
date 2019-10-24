@@ -6,10 +6,10 @@ public class Cat {
     private String food;
     private String name;
 
-    public void show(){
+    public void show() {
         System.out.println("Cat " + this.name + " is eating " + this.food + ".");
     }
-    public String voiceSound(){
+    public String voiceSound() {
         String voice = "meow-meow!";
         return voice;
     }

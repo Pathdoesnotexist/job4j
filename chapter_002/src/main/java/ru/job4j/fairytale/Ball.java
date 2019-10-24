@@ -6,7 +6,7 @@ public class Ball {
     public void setName(String name) {
         this.name = name;
     }
-    public void runAway(){
-        System.out.println( this.name + " убежал!");
+    public void runAway() {
+        System.out.println(this.name + " убежал!");
     }
 }

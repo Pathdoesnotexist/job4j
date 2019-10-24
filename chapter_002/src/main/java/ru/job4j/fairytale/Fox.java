@@ -6,7 +6,7 @@ public class Fox {
     public void setName(String name) {
         this.name = name;
     }
-    public void tryEat(Ball ball){
+    public void tryEat(Ball ball) {
         System.out.println(name + " съела колобка!");
     }
 }

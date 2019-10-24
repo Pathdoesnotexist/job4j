@@ -38,7 +38,7 @@ public class Main {
         String idOfOne = items[1].getId();
         String idOfNone = tracker.generateId();
 
-        tracker.findById(idOfOne);
+        tracker.findById(idOfOne); //вызывать надо массив без нулей
         tracker.findById(idOfNone);
 
 //        System.out.println("\nпроверяем findByName() по имени Object 4:");

@@ -3,7 +3,7 @@ package ru.job4j.pojo;
 public class Shop {
 
     public static Product[] delete(Product[] products, int index) {
-        System.arraycopy(products, index+1, products, index, products.length - 1 - index);
+        System.arraycopy(products, index + 1, products, index, products.length - 1 - index);
         products[products.length - 1] = null;
 //        products[index] = null;
 //        for (int i = index; i < products.length - 1; i++) {

@@ -1,6 +1,16 @@
 package ru.job4j.tracker;
 
 public class Main {
+    private static void printElements(Item[] items) {
+        for (Item item : items) {
+            if (item != null) {
+                System.out.println(item.getName() + " ID Key: " + item.getId());
+            } else {
+                System.out.println("null");
+            }
+        }
+    }
+
     public static void main(String[] args) {
         Tracker tracker = new Tracker();
         Item[] items = tracker.items;
@@ -16,33 +26,29 @@ public class Main {
         tracker.add(item3);
         tracker.add(item4);
         tracker.add(item5);
+        printElements(items);
 
-        for (int i = 0; i < items.length; i++) {
-            if (items[i] != null) {
-                System.out.println(items[i].getName() + " ID Key: " + items[i].getId());
-            } else {
-                System.out.println("null");
-            }
-        }
-        System.out.println("\nпроверяем findAll():");
+        System.out.println("\nпроверяем findAll(), удаляя все null-элементы:");
         Item[] withoutNulls = tracker.findAll(items);
-        for (int i = 0; i < withoutNulls.length; i++) {
-            if (withoutNulls[i] != null) {
-                System.out.println(withoutNulls[i].getName() + " ID Key: " + withoutNulls[i].getId());
-            } else {
-                System.out.println("null");
-            }
-        }
+        printElements(withoutNulls);
 
-        System.out.println("\nпроверяем findById() с элементом items[1] и с несуществующим:");
+        System.out.println("\nпроверяем findById() с элементом items[1] \"Object 2\" и с несуществующим:");
         String idOfOne = items[1].getId();
         String idOfNone = tracker.generateId();
+        System.out.println(tracker.findById(idOfOne).getName());
+        System.out.println(tracker.findById(idOfNone));
 
-        tracker.findById(idOfOne); //вызывать надо массив без нулей
-        tracker.findById(idOfNone);
+        System.out.println("\nпроверяем replace() с элементом items[1] \"Object 2\"");
+        Item testReplace = new Item("New Object");
+        testReplace.setId(tracker.generateId());
+        System.out.println(tracker.replace(idOfOne, testReplace));
+        printElements(items);
 
-//        System.out.println("\nпроверяем findByName() по имени Object 4:");
-//        tracker.findByName("Object 4");
+        System.out.println("\nпроверяем delete() с элементом items[1] \"New Object\"");
+        System.out.println(tracker.delete(testReplace.getId()));
+        printElements(items);
 
+        System.out.println("\nпроверяем findByName() с элементом \"Object 4\"");
+        printElements(tracker.findByName("Object 4"));
     }
 }

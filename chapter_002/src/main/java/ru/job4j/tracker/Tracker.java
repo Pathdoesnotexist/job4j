@@ -1,17 +1,16 @@
 package ru.job4j.tracker;
 import java.util.*;
 
+
 public class Tracker {
     /**
      * Массив для хранение заявок.
      */
     public final Item[] items = new Item[10]; //поменять на приват когда закончишь
-
     /**
      * Указатель ячейки для новой заявки.
      */
     private int position = 0;
-
     /**
      * Метод реализаущий добавление заявки в хранилище
      * @param item новая заявка
@@ -33,7 +32,7 @@ public class Tracker {
     /**
      * Метод возвращает копию массива this.items без null элементов
      * @param items массив this.items
-     * @return копию this.items без null
+     * @return копию this.items без null-ячеек
      */
     public Item[] findAll(Item[] items) {
         int index = 0;
@@ -44,65 +43,65 @@ public class Tracker {
                 break;
             }
         }
-        Item[] listOfAll = new Item[index];
-        System.arraycopy(this.items, 0, listOfAll, 0, index);
-        return listOfAll;
+        Item[] listOfExisting = new Item[index];
+        System.arraycopy(this.items, 0, listOfExisting, 0, index);
+        return listOfExisting;
     }
-
     /**
-     * получение заявки по id - проверяет в цикле все элементы массива this.items,
-     * cравнивая id с аргументом String id и возвращает найденный Item.
-     * Если Item не найден - возвращает null.
-     * @param id null
-     * @return null
+     * получение заявки по id
+     * @param id завки для поиска
+     * @return заявку или null
      */
     public Item findById(String id) {
-        Item result = null;
-        for (Item item  : this.items) {
-            if (item.getId().equals(id)) {
-                System.out.println("Найден!  " + item.getName() + " ID Key: " + item.getId());  // удалить эти строки
-                result = item;
-                break;
+        for (int i = 0; i < position; i++) {
+            if (this.items[i].getId().equals(id)) {
+                return this.items[i];
             }
         }
-        return result;
+        return null;
     }
-
     /**
-     * должен заменить ячейку в массиве this.items. Для этого необходимо найти ячейку в массиве по id
-     * Метод должен вернуть boolean результат - удалось ли провести операцию.
-     * @param id null
-     * @param item null
-     * @return null
+     * заменяет ячейку в массиве this.items, если она существует
+     * @param id идентификатор элемента, который надо заменить
+     * @param item элемент который всятавляем вместо заменяемого
+     * @return результат операции
      */
     public boolean replace(String id, Item item) {
-        return false;
+        Item targetItem = findById(id);
+        if (targetItem != null) {
+            int index = Arrays.asList(this.items).indexOf(targetItem);
+            this.items[index] = item;
+            return true;
+        } else {
+            return false;
+        }
     }
-
     /**
-     * должен удалить ячейку в массиве this.items. Для этого необходимо найти ячейку в массиве по id.
-     * Далее сместить все значения справа от удаляемого элемента - на одну ячейку влево с помощью System.arrayCopy().
-     * Метод должен вернуть boolean результат - удалось ли провести операцию.
-     * @param id null
-     * @return null
+     * удаляет ячейку в массиве this.items, если она существует
+     * @param id идентификатор элемента, который надо удалить
+     * @return результат операции
      */
     public boolean delete(String id) {
-        Item toDelete = findById(id);
-        return false;
+        Item targetItem = findById(id);
+        if (targetItem != null) {
+            int index = Arrays.asList(this.items).indexOf(targetItem);
+            System.arraycopy(this.items, index + 1, this.items, index, this.items.length - 1 - index);
+            this.items[this.items.length - 1] = null;
+            position--;
+            return true;
+        } else {
+            return false;
+        }
     }
-
     /**
-     * получение списка по имени - проверяет в цикле все элементы массива this.items,
-     * сравнивая name (используя метод getName класса Item)
-     * с аргументом метода String key. Элементы, у которых совпадает name,
-     * копирует в результирующий массив и возвращает его;
-     * @param key null
-     * @return null
+     * получение списка по имени в результирующий массив
+     * @param key имя элемента для сортировки
+     * @return массив, содержащий все элементы с заданным именем
      */
     public Item[] findByName(String key) {
         int position = 0;
-        Item[] nameList = new Item[100];
-        for (Item item : this.items) {
+        Item[] nameList = new Item[findAll(this.items).length];
+        for (Item item : findAll(this.items)) {
             if (item.getName().equals(key)) {
                 nameList[position++] = item;
             }

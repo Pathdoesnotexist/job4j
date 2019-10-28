@@ -1,16 +1,19 @@
 package ru.job4j.tracker;
 import java.util.*;
 
-
 public class Tracker {
-    /**
-     * Массив для хранение заявок.
-     */
-    public final Item[] items = new Item[10]; //поменять на приват когда закончишь
     /**
      * Указатель ячейки для новой заявки.
      */
     private int position = 0;
+    /**
+     * Длина списка.
+     */
+    private int length = 100;
+    /**
+     * Массив для хранение заявок.
+     */
+    public final Item[] items = new Item[length]; //поменять на приват когда закончишь
     /**
      * Метод реализаущий добавление заявки в хранилище
      * @param item новая заявка
@@ -35,17 +38,7 @@ public class Tracker {
      * @return копию this.items без null-ячеек
      */
     public Item[] findAll(Item[] items) {
-        int index = 0;
-        for (Item item : items) {
-            if (item != null) {
-                index++;
-            } else {
-                break;
-            }
-        }
-        Item[] listOfExisting = new Item[index];
-        System.arraycopy(this.items, 0, listOfExisting, 0, index);
-        return listOfExisting;
+        return Arrays.copyOf(items, position);
     }
     /**
      * получение заявки по id
@@ -67,14 +60,23 @@ public class Tracker {
      * @return результат операции
      */
     public boolean replace(String id, Item item) {
-        Item targetItem = findById(id);
-        if (targetItem != null) {
-            int index = Arrays.asList(this.items).indexOf(targetItem);
-            this.items[index] = item;
-            return true;
-        } else {
-            return false;
+        boolean result = false;
+        for (int i = 0; i < items.length; i++) {
+            if (items[i].getId().equals(id)) {
+                items[i] = item;
+                result = true;
+                break;
+            }
         }
+        return result;
+//        Item targetItem = findById(id);
+//        if (targetItem != null) {
+//            int index = Arrays.asList(this.items).indexOf(targetItem);
+//            this.items[index] = item;
+//            return true;
+//        } else {
+//            return false;
+//        }
     }
     /**
      * удаляет ячейку в массиве this.items, если она существует
@@ -99,13 +101,13 @@ public class Tracker {
      * @return массив, содержащий все элементы с заданным именем
      */
     public Item[] findByName(String key) {
-        int position = 0;
-        Item[] nameList = new Item[findAll(this.items).length];
+        int pos = 0;
+        Item[] nameList = new Item[length];
         for (Item item : findAll(this.items)) {
             if (item.getName().equals(key)) {
-                nameList[position++] = item;
+                nameList[pos++] = item;
             }
         }
-        return nameList;
+        return Arrays.copyOf(nameList, pos);
     }
 }

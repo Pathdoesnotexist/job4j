@@ -1,10 +1,40 @@
 package ru.job4j.tracker;
 
+import org.junit.Assert;
 import org.junit.Test;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 public class TrackerTest {
+
+    @Test
+    public void findAll_FindById() {
+        Tracker tracker = new Tracker();
+        Item[] items = tracker.items;
+        int findAllCount = 5;
+        String findByIdWin = "Object 2";
+
+        Item item1 = new Item("Object 1");
+        Item item2 = new Item("Object 2");
+        Item item3 = new Item("Object 3");
+        Item item4 = new Item("Object 4");
+        Item item5 = new Item("Object 4");
+
+        tracker.add(item1);
+        tracker.add(item2);
+        tracker.add(item3);
+        tracker.add(item4);
+        tracker.add(item5);
+
+        Item[] withoutNulls = tracker.findAll(items);
+        Assert.assertEquals(withoutNulls.length, findAllCount);
+
+        String idOfOne = items[1].getId();
+        String idOfNone = "false ID injection";
+        Assert.assertEquals(tracker.findById(idOfOne).getName(), findByIdWin);
+        Assert.assertNull(tracker.findById(idOfNone));
+    }
+
     @Test
     public void whenAddNewItemThenTrackerHasSameItem() {
         Tracker tracker = new Tracker();

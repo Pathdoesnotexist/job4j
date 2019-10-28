@@ -6,7 +6,8 @@ public class Main {
             if (item != null) {
                 System.out.println(item.getName() + " ID Key: " + item.getId());
             } else {
-                System.out.println("null");
+                System.out.println("..and \"null\" to the end of the list length: " + items.length);
+                break;
             }
         }
     }

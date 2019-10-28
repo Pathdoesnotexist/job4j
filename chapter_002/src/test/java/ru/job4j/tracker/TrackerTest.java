@@ -8,7 +8,7 @@ import static org.junit.Assert.assertThat;
 public class TrackerTest {
 
     @Test
-    public void findAll_FindById() {
+    public void findAllFindById() {
         Tracker tracker = new Tracker();
         Item[] items = tracker.items;
         int findAllCount = 5;

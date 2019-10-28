@@ -16,5 +16,6 @@ public class MagicBall {
         } else {
             System.out.print("Будущее туманно");
         }
+        userInput.close();
     }
 }

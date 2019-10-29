@@ -13,7 +13,7 @@ public class Tracker {
     /**
      * Массив для хранение заявок.
      */
-    public final Item[] items = new Item[length]; //поменять на приват когда закончишь
+    public final Item[] items = new Item[length];
     /**
      * Метод реализаущий добавление заявки в хранилище
      * @param item новая заявка
@@ -28,7 +28,7 @@ public class Tracker {
      * Так как у заявки нет уникальности полей, имени и описание. Для идентификации нам нужен уникальный ключ.
      * @return Уникальный ключ.
      */
-    public String generateId() {                        //поменять на приват когда закончишь
+    public String generateId() {
         Random rm = new Random();
         return String.valueOf(Math.abs(rm.nextLong() + System.currentTimeMillis()));
     }
@@ -61,8 +61,9 @@ public class Tracker {
      */
     public boolean replace(String id, Item item) {
         boolean result = false;
-        for (int i = 0; i < items.length; i++) {
+        for (int i = 0; i < position; i++) {
             if (items[i].getId().equals(id)) {
+                item.setId(generateId());
                 items[i] = item;
                 result = true;
                 break;
@@ -84,16 +85,17 @@ public class Tracker {
      * @return результат операции
      */
     public boolean delete(String id) {
-        Item targetItem = findById(id);
-        if (targetItem != null) {
-            int index = Arrays.asList(this.items).indexOf(targetItem);
-            System.arraycopy(this.items, index + 1, this.items, index, this.items.length - 1 - index);
-            this.items[this.items.length - 1] = null;
-            position--;
-            return true;
-        } else {
-            return false;
+        boolean result = false;
+        for (int i = 0; i < position; i++) {
+            if (items[i].getId().equals(id)) {
+                System.arraycopy(this.items, i + 1, this.items, i, this.items.length - 1 - i);
+                this.items[this.items.length - 1] = null;
+                position--;
+                result = true;
+                break;
+            }
         }
+        return result;
     }
     /**
      * получение списка по имени в результирующий массив
@@ -109,5 +111,19 @@ public class Tracker {
             }
         }
         return Arrays.copyOf(nameList, pos);
+    }
+    /**
+     * печать списка элементов в консоль
+     * @param items массив элементов для печати в консоль
+     */
+    public void printElements(Item[] items) {
+        for (Item item : items) {
+            if (item != null) {
+                System.out.println("Name: \"" + item.getName() + "\" ID Key: " + item.getId());
+            } else {
+                System.out.println("..and \"null\" to the end of the list length: " + items.length);
+                break;
+            }
+        }
     }
 }

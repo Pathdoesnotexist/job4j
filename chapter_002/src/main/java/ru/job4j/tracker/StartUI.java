@@ -1,7 +1,7 @@
 package ru.job4j.tracker;
 
 public class StartUI {
-    private static void createItem(Input input, Tracker tracker) {
+    public static void createItem(Input input, Tracker tracker) {
         System.out.println("\n=== Create a new Item ====");
         String name = input.askStr("Enter name: ");
         Item item = new Item(name);
@@ -9,7 +9,7 @@ public class StartUI {
         System.out.print("Item " + name + "created successfully!\n");
     }
 
-    private static void showAll(Input input, Tracker tracker) {
+    public static void showAll(Input input, Tracker tracker) {
         System.out.println("\n=== Show all items ====");
         if (tracker.findAll(tracker.items).length == 0) {
             System.out.println("Error: list is empty.");
@@ -18,7 +18,7 @@ public class StartUI {
         }
     }
 
-    private static void editItem(Input input, Tracker tracker) {
+    public static void editItem(Input input, Tracker tracker) {
         System.out.println("\n=== Edit item ====");
         String id = input.askStr("Enter ID of item to edit: ");
         Item newName = new Item(input.askStr("Enter new name: "));
@@ -29,7 +29,7 @@ public class StartUI {
         }
     }
 
-    private static void deleteItem(Input input, Tracker tracker) {
+    public static void deleteItem(Input input, Tracker tracker) {
         System.out.println("\n=== Delete item ====");
         String id = input.askStr("Enter ID: ");
         if (tracker.delete(id)) {
@@ -39,7 +39,7 @@ public class StartUI {
         }
     }
 
-    private static void findById(Input input, Tracker tracker) {
+    public static void findById(Input input, Tracker tracker) {
         System.out.println("\n=== Find item by Id ====");
         String id = input.askStr("Enter ID: ");
         if (tracker.findById(id) == null) {
@@ -49,7 +49,7 @@ public class StartUI {
         }
     }
 
-    private static void findByName(Input input, Tracker tracker) {
+    public static void findByName(Input input, Tracker tracker) {
         System.out.println("\n=== Find items by name ====");
         String itemName = input.askStr("Enter item name: ");
         if (tracker.findByName(itemName).length == 0) {

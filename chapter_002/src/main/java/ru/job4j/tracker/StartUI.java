@@ -1,6 +1,24 @@
 package ru.job4j.tracker;
 
 public class StartUI {
+    private static final int ADD = 0;
+    private static final int SHOW_ALL = 1;
+    private static final int EDIT = 2;
+    private static final int DELETE = 3;
+    private static final int FIND_ID = 4;
+    private static final int FIND_NAME = 5;
+
+    private static void printElements(Item[] items) {
+        for (Item item : items) {
+            if (item != null) {
+                System.out.println("Name: \"" + item.getName() + "\" ID Key: " + item.getId());
+            } else {
+                System.out.println("..and \"null\" to the end of the list length: " + items.length);
+                break;
+            }
+        }
+    }
+
     public static void createItem(Input input, Tracker tracker) {
         System.out.println("\n=== Create a new Item ====");
         String name = input.askStr("Enter name: ");
@@ -14,7 +32,7 @@ public class StartUI {
         if (tracker.findAll(tracker.items).length == 0) {
             System.out.println("Error: list is empty.");
         } else {
-            tracker.printElements(tracker.findAll(tracker.items));
+            printElements(tracker.findAll(tracker.items));
         }
     }
 
@@ -55,7 +73,7 @@ public class StartUI {
         if (tracker.findByName(itemName).length == 0) {
             System.out.println("\nError: name not found");
         } else {
-            tracker.printElements(tracker.findByName(itemName));
+            printElements(tracker.findByName(itemName));
         }
     }
 
@@ -65,20 +83,20 @@ public class StartUI {
             this.showMenu();
             int select;
             do {
-                select = input.askInt("Select: ");
+                select = Integer.parseInt(input.askStr("Select: "));
             }
             while (select < 0 || select > 6);
-            if (select == 0) {
+            if (select == ADD) {
                 StartUI.createItem(input, tracker);
-            } else if (select == 1) {
+            } else if (select == SHOW_ALL) {
                 StartUI.showAll(input, tracker);
-            } else if (select == 2) {
+            } else if (select == EDIT) {
                 StartUI.editItem(input, tracker);
-            } else if (select == 3) {
+            } else if (select == DELETE) {
                 StartUI.deleteItem(input, tracker);
-            } else if (select == 4) {
+            } else if (select == FIND_ID) {
                 StartUI.findById(input, tracker);
-            } else if (select == 5) {
+            } else if (select == FIND_NAME) {
                 StartUI.findByName(input, tracker);
             } else {
                 System.out.println("\nTracker closed");

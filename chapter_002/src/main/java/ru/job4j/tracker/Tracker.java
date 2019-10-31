@@ -63,8 +63,7 @@ public class Tracker {
         boolean result = false;
         for (int i = 0; i < position; i++) {
             if (items[i].getId().equals(id)) {
-                item.setId(generateId());
-                items[i] = item;
+                items[i].setName(item.getName());
                 result = true;
                 break;
             }
@@ -111,19 +110,5 @@ public class Tracker {
             }
         }
         return Arrays.copyOf(nameList, pos);
-    }
-    /**
-     * печать списка элементов в консоль
-     * @param items массив элементов для печати в консоль
-     */
-    public void printElements(Item[] items) {
-        for (Item item : items) {
-            if (item != null) {
-                System.out.println("Name: \"" + item.getName() + "\" ID Key: " + item.getId());
-            } else {
-                System.out.println("..and \"null\" to the end of the list length: " + items.length);
-                break;
-            }
-        }
     }
 }

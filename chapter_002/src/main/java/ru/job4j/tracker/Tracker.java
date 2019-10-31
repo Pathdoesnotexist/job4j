@@ -69,14 +69,6 @@ public class Tracker {
             }
         }
         return result;
-//        Item targetItem = findById(id);
-//        if (targetItem != null) {
-//            int index = Arrays.asList(this.items).indexOf(targetItem);
-//            this.items[index] = item;
-//            return true;
-//        } else {
-//            return false;
-//        }
     }
     /**
      * удаляет ячейку в массиве this.items, если она существует

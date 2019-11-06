@@ -28,11 +28,12 @@ public class StartUI {
     }
 
     public static void showAll(Input input, Tracker tracker) {
+        Item[] itemList = tracker.findAll(tracker.items);
         System.out.println("\n=== Show all items ====");
-        if (tracker.findAll(tracker.items).length == 0) {
+        if (itemList.length == 0) {
             System.out.println("Error: list is empty.");
         } else {
-            printElements(tracker.findAll(tracker.items));
+            printElements(itemList);
         }
     }
 
@@ -60,20 +61,22 @@ public class StartUI {
     public static void findById(Input input, Tracker tracker) {
         System.out.println("\n=== Find item by Id ====");
         String id = input.askStr("Enter ID: ");
-        if (tracker.findById(id) == null) {
+        Item foundById = tracker.findById(id);
+        if (foundById == null) {
             System.out.println("\nError: ID not found");
         } else {
-            System.out.print("Name: " + tracker.findById(id).getName() + "\n");
+            System.out.print("Name: " + foundById.getName() + "\n");
         }
     }
 
     public static void findByName(Input input, Tracker tracker) {
         System.out.println("\n=== Find items by name ====");
         String itemName = input.askStr("Enter item name: ");
-        if (tracker.findByName(itemName).length == 0) {
+        Item[] foundByName = tracker.findByName(itemName);
+        if (foundByName.length == 0) {
             System.out.println("\nError: name not found");
         } else {
-            printElements(tracker.findByName(itemName));
+            printElements(foundByName);
         }
     }
 

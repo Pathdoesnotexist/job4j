@@ -1,5 +1,6 @@
 package ru.job4j.tracker;
 
+import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;
 import static org.hamcrest.Matchers.is;
@@ -81,4 +82,38 @@ public class TrackerTest {
         System.setOut(def);
     }
 
+    @Test
+    public void whenShowAll() {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        PrintStream def = System.out;
+        System.setOut(new PrintStream(out));
+        Tracker tracker = new Tracker();
+        Item item = new Item("fix bug");
+        tracker.add(item);
+        ShowAll act = new ShowAll();
+        act.execute(new StubInput(new String[]{}), tracker);
+        String expect = new StringJoiner(System.lineSeparator(), "", System.lineSeparator())
+                .add("\n=== Show all items ====")
+                .add("Name: \"" + item.getName() + "\" ID Key: " + item.getId())
+                .toString();
+        assertThat(new String(out.toByteArray()), Matchers.is(expect));
+        System.setOut(def);
+    }
+
+    @Test
+    public void whenFindByName() {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        PrintStream def = System.out;
+        System.setOut(new PrintStream(out));
+        Tracker tracker = new Tracker();
+        Item itemOne = new Item("one");
+        tracker.add(itemOne);
+        FindByName act = new FindByName();
+        act.execute(new StubInput(new String[] {"one"}), tracker);
+        String expect = new StringJoiner(System.lineSeparator(), "", System.lineSeparator())
+                .add("Name: \"" + itemOne.getName() + "\" ID Key: " + itemOne.getId())
+                .toString();
+        assertThat(new String(out.toByteArray()), Matchers.is(expect));
+        System.setOut(def);
+    }
 }

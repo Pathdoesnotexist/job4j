@@ -17,12 +17,14 @@ public class ValidateInput implements Input {
         boolean invalid = true;
         int value = -1;
         do {
+            //----------------------------------------------------------------
             try {
                 value = input.askInt(question);
                 invalid = false;
             } catch (NumberFormatException nfe) {
                 System.out.println("Please enter a valid data ");
             }
+            //----------------------------------------------------------------
         } while (invalid);
         return value;
     }
@@ -32,6 +34,7 @@ public class ValidateInput implements Input {
         boolean invalid = true;
         int value = -1;
         do {
+            //----------------------------------------------------------------
             try {
                 value = input.askInt(question, max);
                 invalid = false;
@@ -40,6 +43,7 @@ public class ValidateInput implements Input {
             } catch (NumberFormatException nfe) {
                 System.out.println("Please enter a valid data ");
             }
+            //----------------------------------------------------------------
         } while (invalid);
         return value;
     }

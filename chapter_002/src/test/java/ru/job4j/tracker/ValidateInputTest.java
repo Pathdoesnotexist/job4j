@@ -12,6 +12,7 @@ public class ValidateInputTest {
     public void whenInvalidInput() {
         ByteArrayOutputStream mem = new ByteArrayOutputStream();
         PrintStream out = System.out;
+        String expected = "Please enter a valid data " + System.lineSeparator();
         System.setOut(new PrintStream(mem));
         ValidateInput input = new ValidateInput(
                 new StubInput(new String[] {"invalid", "1"})
@@ -19,7 +20,7 @@ public class ValidateInputTest {
         input.askInt("Enter", 1);
         assertThat(
                 mem.toString(),
-                is(String.format("Please enter a valid data \r\n"))
+                is(expected)
         );
         System.setOut(out);
     }

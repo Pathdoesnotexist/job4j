@@ -1,6 +1,10 @@
 package ru.job4j.tracker;
 
-public class ShowAll implements UserAction {
+public class ShowAll extends BaseAction {
+
+    public ShowAll(String name) {
+        super(name);
+    }
 
     private static void printElements(Item[] items) {
         for (Item item : items) {
@@ -13,10 +17,6 @@ public class ShowAll implements UserAction {
         }
     }
 
-    @Override
-    public String name() {
-        return "Show all items";
-    }
 
     @Override
     public boolean execute(Input input, Tracker tracker) {

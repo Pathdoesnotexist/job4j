@@ -72,7 +72,7 @@ public class TrackerTest {
         StubInput input = new StubInput(
                 new String[] {"0"}
         );
-        StubAction action = new StubAction();
+        StubAction action = new StubAction("Stub action");
         new StartUI().init(input, new Tracker(), new UserAction[] {action});
         String expect = new StringJoiner(System.lineSeparator(), "", System.lineSeparator())
                 .add("Menu.")
@@ -90,7 +90,7 @@ public class TrackerTest {
         Tracker tracker = new Tracker();
         Item item = new Item("fix bug");
         tracker.add(item);
-        ShowAll act = new ShowAll();
+        ShowAll act = new ShowAll("Show all items");
         act.execute(new StubInput(new String[]{}), tracker);
         String expect = new StringJoiner(System.lineSeparator(), "", System.lineSeparator())
                 .add("\n=== Show all items ====")
@@ -108,7 +108,7 @@ public class TrackerTest {
         Tracker tracker = new Tracker();
         Item itemOne = new Item("one");
         tracker.add(itemOne);
-        FindByName act = new FindByName();
+        FindByName act = new FindByName("Find item by name");
         act.execute(new StubInput(new String[] {"one"}), tracker);
         String expect = new StringJoiner(System.lineSeparator(), "", System.lineSeparator())
                 .add("Name: \"" + itemOne.getName() + "\" ID Key: " + itemOne.getId())

@@ -1,6 +1,6 @@
 package ru.job4j.tracker;
 
-public class TrackerSTwo {
+public class TrackerSTwo extends Tracker{
     private static TrackerSTwo instance;
 
     private TrackerSTwo() {
@@ -11,9 +11,5 @@ public class TrackerSTwo {
             instance = new TrackerSTwo();
         }
         return instance;
-    }
-
-    public Item add(Item model) {
-        return model;
     }
 }

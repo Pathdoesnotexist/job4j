@@ -1,6 +1,6 @@
 package ru.job4j.tracker;
 
-public class TrackerSFour {
+public class TrackerSFour extends Tracker {
     private TrackerSFour() {
     }
 

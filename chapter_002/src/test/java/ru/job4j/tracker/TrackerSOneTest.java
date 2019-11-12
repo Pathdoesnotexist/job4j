@@ -10,8 +10,6 @@ public class TrackerSOneTest {
         TrackerSOne first = TrackerSOne.INSTANCE;
         first.add(new Item("test"));
         TrackerSOne second = TrackerSOne.INSTANCE;
-        assertThat(first.items[0].getName(), is(second.items[0].getName()));
+        assertThat(second.items[0].getName(), is("test"));
     }
-
-
 }

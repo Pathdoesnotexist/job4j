@@ -22,8 +22,9 @@ public class UserConvert {
         wrap.list.add(new User(2570, "Saul", "Haifa"));
         wrap.list.add(new User(9088, "Oleg", "Rostov"));
 
-        for (User user: wrap.list)
-        System.out.println("ID:" + user.getId() + " | Name: " + user.getName() + " | City: " + user.getCity());
+        for (User user: wrap.list) {
+            System.out.println("ID:" + user.getId() + " | Name: " + user.getName() + " | City: " + user.getCity());
+        }
 
         HashMap<Integer, User> userMap = wrap.process(wrap.list);
         System.out.println(userMap.keySet());

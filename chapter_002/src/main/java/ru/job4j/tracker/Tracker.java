@@ -57,7 +57,8 @@ public class Tracker {
         boolean result = false;
         for (Item value : items) {
             if (value.getId().equals(id)) {
-                value.setName(item.getName());
+                item.setId(value.getId());
+                items.set(items.indexOf(value), item);
                 result = true;
                 break;
             }

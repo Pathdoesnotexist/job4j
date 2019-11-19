@@ -1,6 +1,10 @@
 package ru.job4j.tracker;
 
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
@@ -12,7 +16,7 @@ public class StartUITest {
         Tracker tracker = new Tracker();
         UserAction createItem = new CreateItem("Add new Item");
         createItem.execute(input, tracker);
-        Item created = tracker.findAll(tracker.items)[0];
+        Item created = tracker.findAll(tracker.items).get(0);
         Item expected = new Item("Fix PC");
         assertThat(created.getName(), is(expected.getName()));
     }
@@ -42,8 +46,7 @@ public class StartUITest {
         tracker.add(item2);
         tracker.add(item3);
         tracker.delete(item2.getId());
-        assertThat(tracker.items[1].getName(), is("3"));
-        assertNull(tracker.items[2]);
+        assertThat(tracker.items.get(1).getName(), is("3"));
     }
 
     @Test
@@ -52,7 +55,9 @@ public class StartUITest {
                 new String[] {"0"}
         );
         StubAction action = new StubAction("Stub action");
-        new StartUI().init(input, new Tracker(), new UserAction[] {action});
+        List<UserAction> list = new ArrayList<>();
+        list.add(action);
+        new StartUI().init(input, new Tracker(), list);
         assertThat(action.isCall(), is(true));
     }
 

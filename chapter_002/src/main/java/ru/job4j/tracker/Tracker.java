@@ -3,24 +3,16 @@ import java.util.*;
 
 public class Tracker {
     /**
-     * Указатель ячейки для новой заявки.
+     * Список для хранение заявок.
      */
-    private int position = 0;
-    /**
-     * Длина списка.
-     */
-    private int length = 100;
-    /**
-     * Массив для хранение заявок.
-     */
-    public final Item[] items = new Item[length];
+    public List<Item> items = new ArrayList<>();
     /**
      * Метод реализаущий добавление заявки в хранилище
      * @param item новая заявка
      */
     public Item add(Item item) {
         item.setId(this.generateId());
-        items[this.position++] = item;
+        items.add(item);
         return item;
     }
     /**
@@ -37,8 +29,8 @@ public class Tracker {
      * @param items массив this.items
      * @return копию this.items без null-ячеек
      */
-    public Item[] findAll(Item[] items) {
-        return Arrays.copyOf(items, position);
+    public List<Item> findAll(List<Item> items) {
+        return items;
     }
     /**
      * получение заявки по id
@@ -46,12 +38,14 @@ public class Tracker {
      * @return заявку или null
      */
     public Item findById(String id) {
-        for (int i = 0; i < position; i++) {
-            if (this.items[i].getId().equals(id)) {
-                return this.items[i];
+        Item result = null;
+        for (Item item : items) {
+            if (item.getId().equals(id)) {
+                result = item;
+                break;
             }
         }
-        return null;
+        return result;
     }
     /**
      * заменяет ячейку в массиве this.items, если она существует
@@ -59,11 +53,11 @@ public class Tracker {
      * @param item элемент который всятавляем вместо заменяемого
      * @return результат операции
      */
-    public boolean replace(String id, Item item) {
+    public boolean rename(String id, Item item) {
         boolean result = false;
-        for (int i = 0; i < position; i++) {
-            if (items[i].getId().equals(id)) {
-                items[i].setName(item.getName());
+        for (Item value : items) {
+            if (value.getId().equals(id)) {
+                value.setName(item.getName());
                 result = true;
                 break;
             }
@@ -77,11 +71,9 @@ public class Tracker {
      */
     public boolean delete(String id) {
         boolean result = false;
-        for (int i = 0; i < position; i++) {
-            if (items[i].getId().equals(id)) {
-                System.arraycopy(this.items, i + 1, this.items, i, this.items.length - 1 - i);
-                this.items[this.items.length - 1] = null;
-                position--;
+        for (int i = 0; i < items.size(); i++) {
+            if (items.get(i).getId().equals(id)) {
+                items.remove(i);
                 result = true;
                 break;
             }
@@ -93,14 +85,14 @@ public class Tracker {
      * @param key имя элемента для сортировки
      * @return массив, содержащий все элементы с заданным именем
      */
-    public Item[] findByName(String key) {
+    public List<Item> findByName(String key) {
         int pos = 0;
-        Item[] nameList = new Item[length];
+        List<Item> nameList = new ArrayList<>();
         for (Item item : findAll(this.items)) {
             if (item.getName().equals(key)) {
-                nameList[pos++] = item;
+                nameList.add(item);
             }
         }
-        return Arrays.copyOf(nameList, pos);
+        return nameList;
     }
 }

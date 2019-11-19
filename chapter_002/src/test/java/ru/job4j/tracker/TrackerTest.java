@@ -7,6 +7,8 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.StringJoiner;
 
 public class TrackerTest {
@@ -14,7 +16,7 @@ public class TrackerTest {
     @Test
     public void findAllFindById() {
         Tracker tracker = new Tracker();
-        Item[] items = tracker.items;
+        List<Item> items = tracker.items;
         int findAllCount = 5;
         String findByIdWin = "Object 2";
 
@@ -30,10 +32,10 @@ public class TrackerTest {
         tracker.add(item4);
         tracker.add(item5);
 
-        Item[] withoutNulls = tracker.findAll(items);
-        Assert.assertEquals(withoutNulls.length, findAllCount);
+        List<Item> withoutNulls = tracker.findAll(items);
+        Assert.assertEquals(withoutNulls.size(), findAllCount);
 
-        String idOfOne = items[1].getId();
+        String idOfOne = items.get(1).getId();
         String idOfNone = "false ID injection";
         Assert.assertEquals(tracker.findById(idOfOne).getName(), findByIdWin);
         Assert.assertNull(tracker.findById(idOfNone));
@@ -59,7 +61,7 @@ public class TrackerTest {
         // Проставляем старый id из previous, который был сгенерирован выше.
         next.setId(previous.getId());
         // Обновляем заявку в трекере.
-        tracker.replace(previous.getId(), next);
+        tracker.rename(previous.getId(), next);
         // Проверяем, что заявка с таким id имеет новые имя test2.
         assertThat(tracker.findById(previous.getId()).getName(), is("test2"));
     }
@@ -73,9 +75,11 @@ public class TrackerTest {
                 new String[] {"0"}
         );
         StubAction action = new StubAction("Stub action");
-        new StartUI().init(input, new Tracker(), new UserAction[] {action});
+        List<UserAction> list = new ArrayList<>();
+        list.add(action);
+        new StartUI().init(input, new Tracker(), list);
         String expect = new StringJoiner(System.lineSeparator(), "", System.lineSeparator())
-                .add("Menu.")
+                .add("\nMenu.")
                 .add("0. Stub action")
                 .toString();
         assertThat(new String(out.toByteArray()), is(expect));

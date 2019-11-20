@@ -13,7 +13,7 @@ public class SortUsers {
         return users;
     }
 
-    public List<User> sortByAllFields (List<User> users) {
+    public List<User> sortByAllFields(List<User> users) {
         Comparator<User> allComp = new NameComparator().thenComparing(new AgeComparator());
         users.sort(allComp);
         return users;

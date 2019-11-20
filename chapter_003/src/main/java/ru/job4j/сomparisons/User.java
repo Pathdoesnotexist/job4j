@@ -1,10 +1,10 @@
 package ru.job4j.сomparisons;
 
-public class User implements Comparable<User>{
+public class User implements Comparable<User> {
     private String name;
     private int age;
 
-    User (String name, int age) {
+    User(String name, int age) {
         this.name = name;
         this.age = age;
     }

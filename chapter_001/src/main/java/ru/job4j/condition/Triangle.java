@@ -41,7 +41,7 @@ public class Triangle {
      */
     public double area() {
         if (this.exist()) {
-            double p = this.period()/2;
+            double p = this.period() / 2;
         return Math.sqrt(p * (p - ab) * (p - bc) * (p - ac));
         } else {
             return -1;
@@ -49,25 +49,25 @@ public class Triangle {
     }
 
     public static void main(String[] args) {
-        Point a = new Point(0,2);
-        Point b = new Point(1,4);
-        Point c = new Point(4,0);
+        Point a = new Point(0, 2);
+        Point b = new Point(1, 4);
+        Point c = new Point(4, 0);
         Triangle exampleOne = new Triangle(a, b, c);
         System.out.println(exampleOne.exist());
         System.out.println(exampleOne.area());
         System.out.println(exampleOne.period());
 
-        Point a2 = new Point(0,0);
-        Point b2 = new Point(0,0);
-        Point c2 = new Point(0,0);
+        Point a2 = new Point(0, 0);
+        Point b2 = new Point(0, 0);
+        Point c2 = new Point(0, 0);
         Triangle exampleTwo = new Triangle(a2, b2, c2);
         System.out.println(exampleTwo.exist());
         System.out.println(exampleTwo.area());
         System.out.println(exampleTwo.period());
 
-        Point a3 = new Point(0,0);
-        Point b3 = new Point(1,1);
-        Point c3 = new Point(5,5);
+        Point a3 = new Point(0, 0);
+        Point b3 = new Point(1, 1);
+        Point c3 = new Point(5, 5);
         Triangle exampleThree = new Triangle(a3, b3, c3);
         System.out.println(exampleThree.exist());
         System.out.println(exampleThree.area());

@@ -8,9 +8,9 @@ import static org.junit.Assert.assertThat;
 public class TriangleTest {
     @Test
     public void whenTriangle() {
-        Point a = new Point(0,2);
-        Point b = new Point(1,4);
-        Point c = new Point(4,0);
+        Point a = new Point(0, 2);
+        Point b = new Point(1, 4);
+        Point c = new Point(4, 0);
         Triangle abc = new Triangle(a, b, c);
         boolean exist = abc.exist();
         double p = abc.period();
@@ -24,9 +24,9 @@ public class TriangleTest {
 
     @Test
     public void whenPoint() {
-        Point a = new Point(0,0);
-        Point b = new Point(0,0);
-        Point c = new Point(0,0);
+        Point a = new Point(0, 0);
+        Point b = new Point(0, 0);
+        Point c = new Point(0, 0);
         Triangle abc = new Triangle(a, b, c);
         boolean exist = abc.exist();
         double p = abc.period();
@@ -40,9 +40,9 @@ public class TriangleTest {
 
     @Test
     public void whenLineOne() {
-        Point a = new Point(0,1);
-        Point b = new Point(3,8);
-        Point c = new Point(0,1);
+        Point a = new Point(0, 1);
+        Point b = new Point(3, 8);
+        Point c = new Point(0, 1);
         Triangle abc = new Triangle(a, b, c);
         boolean exist = abc.exist();
         double p = abc.period();
@@ -56,9 +56,9 @@ public class TriangleTest {
 
     @Test
     public void whenLineTwo() {
-        Point a = new Point(0,0);
-        Point b = new Point(1,3);
-        Point c = new Point(2,6);
+        Point a = new Point(0, 0);
+        Point b = new Point(1, 3);
+        Point c = new Point(2, 6);
         Triangle abc = new Triangle(a, b, c);
         boolean exist = abc.exist();
         double p = abc.period();

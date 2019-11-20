@@ -15,7 +15,7 @@ public class Point {
         this.z = z;
     }
 
-    public double distance(Point another){
+    public double distance(Point another) {
         return Math.sqrt(Math.pow((this.x - another.x), 2) + Math.pow((this.y - another.y), 2));
     }
     public double distance3d(Point another) {

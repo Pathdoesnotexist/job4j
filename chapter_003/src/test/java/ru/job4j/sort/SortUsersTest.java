@@ -1,4 +1,4 @@
-package ru.job4j.сomparisons;
+package ru.job4j.sort;
 import org.junit.Assert;
 import org.junit.Test;
 

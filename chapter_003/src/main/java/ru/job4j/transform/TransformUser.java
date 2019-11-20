@@ -1,11 +1,11 @@
 package ru.job4j.transform;
 
-public class User {
+public class TransformUser {
     private int id;
     private String name;
     private String city;
 
-        User(int id, String name, String city) {
+    TransformUser(int id, String name, String city) {
         this.id = id;
         this.name = name;
         this.city = city;

@@ -18,16 +18,13 @@ public class SortUsersTest {
         users.add(new User("Vlad", 3));
         users.add(new User("Irina", 37));
 
-        int expectedYoungest = users.get(2).getAge();
-        int expectedOldest = users.get(0).getAge();
-
-        sortUsers.sort(users);
-
-//        int resultYoungest = sortUsers.sort(users).get(0).getAge(); // не получается получить ячейку из трисета по get()
-//        int resultOldest = sortUsers.sort(users).get(3).getAge();   // не получается получить ячейку из трисета по get()
-//
-//        Assert.assertThat(resultYoungest, is(expectedYoungest));
-//        Assert.assertThat(resultOldest, is(expectedOldest));
+        StringBuilder result = new StringBuilder();
+        String expected = "Vlad, age:3. Victor, age:12. Irina, age:37. Anton, age:52. ";
+        Set<User> newTree = sortUsers.sort(users);
+        for (User user: newTree) {
+            result.append(user.getName()).append(", age:").append(user.getAge()).append(". ");
+        }
+        Assert.assertThat(result.toString(), is(expected));
     }
 
     @Test

@@ -9,22 +9,22 @@ import static org.hamcrest.core.Is.is;
 public class SortUsersTest {
 
     @Test
-    public void sortTest() {
-        SortUsers sortUsers = new SortUsers();
+    public void comparableSortTest() {
+        SortUsers wrap = new SortUsers();
         List<User> users = new ArrayList<>();
-
         users.add(new User("Anton", 52));
         users.add(new User("Victor", 12));
         users.add(new User("Vlad", 3));
         users.add(new User("Irina", 37));
+        Set<User> result = wrap.sort(users);
 
-        StringBuilder result = new StringBuilder();
-        String expected = "Vlad, age:3. Victor, age:12. Irina, age:37. Anton, age:52. ";
-        Set<User> newTree = sortUsers.sort(users);
-        for (User user: newTree) {
-            result.append(user.getName()).append(", age:").append(user.getAge()).append(". ");
-        }
-        Assert.assertThat(result.toString(), is(expected));
+        Set<User> expected = new TreeSet<>();
+        expected.add(new User("Anton", 52));
+        expected.add(new User("Victor", 12));
+        expected.add(new User("Vlad", 3));
+        expected.add(new User("Irina", 37));
+
+        Assert.assertEquals(result, expected);
     }
 
     @Test

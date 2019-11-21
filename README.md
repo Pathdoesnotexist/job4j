@@ -1,5 +1,2 @@
-Создание ветки в IDEA
-Объединение зафиксированных изменений
-
-# job4j 4-4.
-# job4j 4-5.
+[![Build Status](https://travis-ci.org/Tevet/job4j.svg?branch=master)](https://travis-ci.org/Tevet/job4j)
+[![codecov](https://codecov.io/gh/Tevet/job4j/branch/master/graph/badge.svg)](https://codecov.io/gh/Tevet/job4j)

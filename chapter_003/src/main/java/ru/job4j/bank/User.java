@@ -2,9 +2,9 @@ package ru.job4j.bank;
 
 public class User implements Comparable<User> {
     private String name;
-    private int passport;
+    private String passport;
 
-    User(String name, int passport) {
+    User(String name, String passport) {
         this.name = name;
         this.passport = passport;
     }
@@ -12,7 +12,7 @@ public class User implements Comparable<User> {
     public String getName() {
         return name;
     }
-    public int getPassport() {
+    public String getPassport() {
         return passport;
     }
 

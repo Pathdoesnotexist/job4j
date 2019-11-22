@@ -1,7 +1,6 @@
 package ru.job4j.bank;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -22,7 +21,7 @@ public class Bank {
      * @param user - клиент, которого необходимо добавить
      */
     public void addUser(User user) {
-        this.treeMap.put(user, new ArrayList<>());
+        this.treeMap.putIfAbsent(user, new ArrayList<>());
     }
     /**
      * Удаление клиента банка из списка
@@ -40,7 +39,7 @@ public class Bank {
         for (Map.Entry<User, ArrayList<Account>> entry : this.treeMap.entrySet()) {
             User user = entry.getKey();
             ArrayList<Account> accountList = entry.getValue();
-            if (user.getPassport() == Integer.parseInt(passport)) {
+            if (user.getPassport().equals(passport)) {
                 accountList.add(account);
                 break;
             }
@@ -55,29 +54,20 @@ public class Bank {
         for (Map.Entry<User, ArrayList<Account>> entry : this.treeMap.entrySet()) {
             User user = entry.getKey();
             ArrayList<Account> accountList = entry.getValue();
-            if (user.getPassport() == Integer.parseInt(passport)) {
+            if (user.getPassport().equals(passport)) {
                 accountList.remove(account);
                 break;
             }
         }
     }
     /**
-     * Получение списка счетов по имени пользователя
-     * @param user - пользователь, список счетов которого необходимо получить
-     * @return список счетов пользователя
+     * Проверка, имеется ли счет у пользователя
+     * @param user - пользователь, которого проверяем
+     * @param account - счет который ищем
+     * @return результат поиска
      */
-    public List<Account> getAccounts(User user) {
-        return this.treeMap.get(user);
-    }
-    /**
-     * Получение конкретного счета пользователя из списка счетов
-     * @param user - пользователь, чей счет ищем
-     * @param account - счет, номер которого ищем
-     * @return счет
-     */
-    private Account getActualAccount(User user, Account account) { //получаем порядковый номер счета пользователя
-        ArrayList<Account> list = this.treeMap.get(user);
-        return list.get(list.indexOf(account));
+    private boolean accountExist(User user, Account account) {
+        return this.treeMap.get(user).contains(account);
     }
     /**
      * Перевод условных единис с одного счета на другой
@@ -91,8 +81,10 @@ public class Bank {
     public boolean transfer(User userFrom, Account accountFrom,
                             User userTo, Account accountTo, double amount) {
         boolean result = false;
-        if (this.treeMap.get(userFrom).contains(accountFrom) && this.treeMap.get(userTo).contains(accountTo)) {
-            result = getActualAccount(userFrom, accountFrom).makeTransfer(getActualAccount(userTo, accountTo), amount);
+        if (accountExist(userFrom, accountFrom) && accountExist(userTo,accountTo) && amount > 0 && accountFrom.getValue() > amount) {
+             accountFrom.setValue(accountFrom.getValue() - amount);
+             accountTo.setValue(accountTo.getValue() + amount);
+             result = true;
         }
         return result;
     }

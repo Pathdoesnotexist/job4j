@@ -12,23 +12,11 @@ public class Account {
     public double getValue() {
         return this.value;
     }
+    public void setValue(double value) {
+            this.value = value;
+    }
     public String getRequisites() {
         return this.requisites;
-    }
-    /**
-     * Перевод денег с текущего счета на целевой
-     * @param destination - счет, на который выполняется перевод
-     * @param amount - сумма перевода
-     * @return - результат выполнения операции
-     */
-    boolean makeTransfer(Account destination, double amount) {
-        boolean result = false;
-        if (amount > 0 && amount < this.value && destination != null) {
-            result = true;
-            this.value -= amount;
-            destination.value += amount;
-        }
-        return result;
     }
 
     public String toString() {

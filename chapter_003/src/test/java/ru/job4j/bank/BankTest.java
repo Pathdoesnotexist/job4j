@@ -81,27 +81,22 @@ public class BankTest {
     }
 
     @Test
-    public void transfer() {
+    public void transferTrue() {
         alphaBank.addUser(eugene);
         alphaBank.addUser(andrey);
         alphaBank.addAccountToUser(andrey.getPassport(), andreyMain);
         alphaBank.addAccountToUser(eugene.getPassport(), eugeneMain);
-        alphaBank.transfer(eugene, eugeneMain, andrey, andreyMain, 1200);
-
-        TreeMap<User, ArrayList<Account>> example = new TreeMap<>();
-        ArrayList<Account> andreyAccounts = new ArrayList<>();
-        ArrayList<Account> eugeneAccounts = new ArrayList<>();
-        Account andreyAccount = new Account(2200, "Main");
-        Account eugeneAccount = new Account(1300, "Main");
-
-        andreyAccounts.add(andreyAccount);
-        eugeneAccounts.add(eugeneAccount);
-
-        example.put(andrey, andreyAccounts);
-        example.put(eugene, eugeneAccounts);
-        String expected = "Bank accounts: " + example;
-
-        Assert.assertThat(alphaBank.toString(), is(expected));
+        boolean result = alphaBank.transfer(eugene, eugeneMain, andrey, andreyMain, 1200);
+        Assert.assertTrue(result);
     }
 
+    @Test
+    public void transferFalse() {
+        alphaBank.addUser(eugene);
+        alphaBank.addUser(andrey);
+        alphaBank.addAccountToUser(andrey.getPassport(), andreyMain);
+        alphaBank.addAccountToUser(eugene.getPassport(), eugeneMain);
+        boolean result = alphaBank.transfer(eugene, eugeneMain, andrey, andreyMain, 12000);
+        Assert.assertFalse(result);
+    }
 }

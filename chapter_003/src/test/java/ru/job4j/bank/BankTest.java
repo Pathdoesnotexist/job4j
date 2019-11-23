@@ -47,37 +47,41 @@ public class BankTest {
     }
 
     @Test
-    public void addAccounts() {
-
+    public void addAccountsSuccess() {
         alphaBank.addUser(pavel);
-        alphaBank.addAccountToUser(pavel.getPassport(), pavelMain);
-        alphaBank.addAccountToUser(pavel.getPassport(), pavelCredit);
-
-        TreeMap<User, ArrayList<Account>> example = new TreeMap<>();
-        ArrayList<Account> accounts = new ArrayList<>();
-        accounts.add(pavelMain);
-        accounts.add(pavelCredit);
-        example.put(pavel, accounts);
-        String expected = "Bank accounts: " + example;
-
-        Assert.assertThat(alphaBank.toString(), is(expected));
+        boolean result = alphaBank.addAccountToUser("2389", pavelMain);
+        Assert.assertTrue(result);
     }
 
     @Test
-    public void deleteAccounts() {
-
+    public void addAccountsFail() {
         alphaBank.addUser(pavel);
-        alphaBank.addAccountToUser(pavel.getPassport(), pavelMain);
-        alphaBank.addAccountToUser(pavel.getPassport(), pavelCredit);
-        alphaBank.deleteAccountFromUser(pavel.getPassport(), pavelMain);
+        boolean result = alphaBank.addAccountToUser("2000", pavelMain);
+        Assert.assertFalse(result);
+    }
 
-        TreeMap<User, ArrayList<Account>> example = new TreeMap<>();
-        ArrayList<Account> accounts = new ArrayList<>();
-        accounts.add(pavelCredit);
-        example.put(pavel, accounts);
-        String expected = "Bank accounts: " + example;
+    @Test
+    public void deleteAccountSuccess() {
+        alphaBank.addUser(pavel);
+        alphaBank.addAccountToUser("2389", pavelMain);
+        boolean result = alphaBank.deleteAccountFromUser("2389", pavelMain);
+        Assert.assertTrue(result);
+    }
 
-        Assert.assertThat(alphaBank.toString(), is(expected));
+    @Test
+    public void deleteAccountFailWrongAccount() {
+        alphaBank.addUser(pavel);
+        alphaBank.addAccountToUser("2389", pavelMain);
+        boolean result = alphaBank.deleteAccountFromUser("2389", pavelCredit);
+        Assert.assertFalse(result);
+    }
+
+    @Test
+    public void deleteAccountFailWrongUser() {
+        alphaBank.addUser(pavel);
+        alphaBank.addAccountToUser("2389", pavelMain);
+        boolean result = alphaBank.deleteAccountFromUser("2388", pavelMain);
+        Assert.assertFalse(result);
     }
 
     @Test
@@ -86,17 +90,37 @@ public class BankTest {
         alphaBank.addUser(andrey);
         alphaBank.addAccountToUser(andrey.getPassport(), andreyMain);
         alphaBank.addAccountToUser(eugene.getPassport(), eugeneMain);
-        boolean result = alphaBank.transfer(eugene, eugeneMain, andrey, andreyMain, 1200);
+        boolean result = alphaBank.transfer("4097", "Main", "4568", "Main", 1200);
         Assert.assertTrue(result);
     }
 
     @Test
-    public void transferFalse() {
+    public void transferFalseByAmount() {
         alphaBank.addUser(eugene);
         alphaBank.addUser(andrey);
         alphaBank.addAccountToUser(andrey.getPassport(), andreyMain);
         alphaBank.addAccountToUser(eugene.getPassport(), eugeneMain);
-        boolean result = alphaBank.transfer(eugene, eugeneMain, andrey, andreyMain, 12000);
+        boolean result = alphaBank.transfer("4097", "Main", "4568", "Main", 12000);
+        Assert.assertFalse(result);
+    }
+
+    @Test
+    public void transferFalseUserNotExist() {
+        alphaBank.addUser(eugene);
+        alphaBank.addUser(andrey);
+        alphaBank.addAccountToUser(andrey.getPassport(), andreyMain);
+        alphaBank.addAccountToUser(eugene.getPassport(), eugeneMain);
+        boolean result = alphaBank.transfer("4097", "Main", "4000", "Main", 12000);
+        Assert.assertFalse(result);
+    }
+
+    @Test
+    public void transferFalseAccountNotExist() {
+        alphaBank.addUser(eugene);
+        alphaBank.addUser(andrey);
+        alphaBank.addAccountToUser(andrey.getPassport(), andreyMain);
+        alphaBank.addAccountToUser(eugene.getPassport(), eugeneMain);
+        boolean result = alphaBank.transfer("4097", "Main", "4568", "Man", 1);
         Assert.assertFalse(result);
     }
 }

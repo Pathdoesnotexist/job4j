@@ -17,6 +17,41 @@ public class Bank {
         return "Bank accounts: " + treeMap;
     }
     /**
+     * Поиск пользователя по номеру паспорта или null
+     * @param passport номер паспорта
+     * @return пользователя с соотвествующим паспортом
+     */
+    private User userByPassport(String passport) {
+        User result = null;
+        for (Map.Entry<User, ArrayList<Account>> entry : this.treeMap.entrySet()) {
+            User user = entry.getKey();
+            if (user.getPassport().equals(passport)) {
+                result = user;
+                break;
+            }
+        }
+        return result;
+    }
+    /**
+     * Возвращает счет по реквизитам, если он есть у пользователя или null
+     * @param user пользователь, чей список счетов проверяем
+     * @param requisites реквизиты счета
+     * @return пользователя или null
+     */
+    private Account accountByRequisites(User user, String requisites) {
+        Account result = null;
+        if (user != null) {
+            ArrayList<Account> accountList = this.treeMap.get(user);
+            for (Account account : accountList) {
+                if (account.getRequisites().equals(requisites)) {
+                    result = account;
+                    break;
+                }
+            }
+        }
+        return result;
+    }
+    /**
      * Добавление нового клиента банка в список
      * @param user - клиент, которого необходимо добавить
      */
@@ -35,53 +70,44 @@ public class Bank {
      * @param passport - номер паспорта пользователя
      * @param account - новый счет, который необходимо добавить пользователю
      */
-    public void addAccountToUser(String passport, Account account) {
-        for (Map.Entry<User, ArrayList<Account>> entry : this.treeMap.entrySet()) {
-            User user = entry.getKey();
-            ArrayList<Account> accountList = entry.getValue();
-            if (user.getPassport().equals(passport)) {
-                accountList.add(account);
-                break;
-            }
+    public boolean addAccountToUser(String passport, Account account) {
+        boolean result = false;
+        if (userByPassport(passport) != null) {
+            this.treeMap.get(userByPassport(passport)).add(account);
+            result = true;
         }
+        return result;
     }
     /**
      * Поиск клиента в списке клиентов по номеру паспорта и удаление у него существующего счета
      * @param passport - номер паспорта пользователя
      * @param account - новый счет, который необходимо добавить пользователю
      */
-    public void deleteAccountFromUser(String passport, Account account) {
-        for (Map.Entry<User, ArrayList<Account>> entry : this.treeMap.entrySet()) {
-            User user = entry.getKey();
-            ArrayList<Account> accountList = entry.getValue();
-            if (user.getPassport().equals(passport)) {
-                accountList.remove(account);
-                break;
-            }
+    public boolean deleteAccountFromUser(String passport, Account account) {
+        boolean result = false;
+        if (userByPassport(passport) != null && this.treeMap.get(userByPassport(passport)).contains(account)) {
+            this.treeMap.get(userByPassport(passport)).remove(account);
+            result = true;
         }
+        return result;
     }
     /**
-     * Проверка, имеется ли счет у пользователя
-     * @param user - пользователь, которого проверяем
-     * @param account - счет который ищем
-     * @return результат поиска
-     */
-    private boolean accountExist(User user, Account account) {
-        return this.treeMap.get(user).contains(account);
-    }
-    /**
-     * Перевод условных единис с одного счета на другой
-     * @param userFrom пользователь, со счета которого переводим условные единицы
-     * @param accountFrom  счет с которого переводим условные единицы
-     * @param userTo пользователь, на счет которого переводим условные единицы
-     * @param accountTo счет на который переводим условные единицы
-     * @param amount количество условных единиц для перевода
+     * Перевод условных единиц между счетами пользователей
+     * @param srcPassport номер паспорта пользователя-отправителя
+     * @param srcRequisite счет отправителя
+     * @param destPassport номер паспорта пользователя-получателя
+     * @param dstRequisite счет получателя
+     * @param amount сумма для перевода
      * @return результат операции
      */
-    public boolean transfer(User userFrom, Account accountFrom,
-                            User userTo, Account accountTo, double amount) {
+    public boolean transfer(String srcPassport, String srcRequisite,
+                            String destPassport, String dstRequisite, double amount) {
         boolean result = false;
-        if (accountExist(userFrom, accountFrom) && accountExist(userTo,accountTo) && amount > 0 && accountFrom.getValue() > amount) {
+        User userFrom = userByPassport(srcPassport);
+        User userTo = userByPassport(destPassport);
+        Account accountFrom = accountByRequisites(userFrom, srcRequisite);
+        Account accountTo = accountByRequisites(userTo, dstRequisite);
+        if (accountFrom != null && accountTo != null && amount > 0 && accountFrom.getValue() > amount) {
              accountFrom.setValue(accountFrom.getValue() - amount);
              accountTo.setValue(accountTo.getValue() + amount);
              result = true;

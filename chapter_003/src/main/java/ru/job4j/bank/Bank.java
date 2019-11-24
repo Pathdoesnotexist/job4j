@@ -72,8 +72,9 @@ public class Bank {
      */
     public boolean addAccountToUser(String passport, Account account) {
         boolean result = false;
-        if (userByPassport(passport) != null) {
-            this.treeMap.get(userByPassport(passport)).add(account);
+        User user = userByPassport(passport);
+        if (user != null) {
+            this.treeMap.get(user).add(account);
             result = true;
         }
         return result;
@@ -85,8 +86,9 @@ public class Bank {
      */
     public boolean deleteAccountFromUser(String passport, Account account) {
         boolean result = false;
-        if (userByPassport(passport) != null && this.treeMap.get(userByPassport(passport)).contains(account)) {
-            this.treeMap.get(userByPassport(passport)).remove(account);
+        User user = userByPassport(passport);
+        if (user != null && this.treeMap.get(user).contains(account)) {
+            this.treeMap.get(user).remove(account);
             result = true;
         }
         return result;

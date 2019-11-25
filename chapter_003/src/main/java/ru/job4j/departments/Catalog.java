@@ -6,7 +6,7 @@ public class Catalog {
     /**
      * Справочник департаментов
      */
-    public List<String> catalog = new ArrayList<>(); //прочитать можно ли задавать сортировки внутри ArrayList
+    public List<String> catalog = new ArrayList<>();
     /**
      * Прямой посимвольный порядок сортировки каталога
      * @param catalog - каталог департаментов до сортировки

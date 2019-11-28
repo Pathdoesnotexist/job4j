@@ -4,11 +4,10 @@ import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
+import java.util.function.Consumer;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -70,56 +69,48 @@ public class TrackerTest {
 
     @Test
     public void whenPrtMenu() {
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        PrintStream def = System.out;
-        System.setOut(new PrintStream(out));
+        Consumer<String> output = System.out::println;
         StubInput input = new StubInput(
                 new String[] {"0"}
         );
-        StubAction action = new StubAction("Stub action");
+        StubAction action = new StubAction("Stub action", output);
         List<UserAction> list = new ArrayList<>();
         list.add(action);
-        new StartUI().init(input, new Tracker(), list);
+
+        new StartUI(input, new Tracker(), output).init(list);
         String expect = new StringJoiner(System.lineSeparator(), "", System.lineSeparator())
                 .add("\nMenu.")
                 .add("0. Stub action")
                 .toString();
-        assertThat(new String(out.toByteArray()), is(expect));
-        System.setOut(def);
+        assertThat(output.toString(), is(expect));
     }
 
     @Test
     public void whenShowAll() {
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        PrintStream def = System.out;
-        System.setOut(new PrintStream(out));
+        Consumer<String> output = System.out::println;
         Tracker tracker = new Tracker();
         Item item = new Item("fix bug");
         tracker.add(item);
-        ShowAll act = new ShowAll("Show all items");
+        ShowAll act = new ShowAll("Show all items", output);
         act.execute(new StubInput(new String[]{}), tracker);
         String expect = new StringJoiner(System.lineSeparator(), "", System.lineSeparator())
                 .add("\n=== Show all items ====")
                 .add("Name: \"" + item.getName() + "\" ID Key: " + item.getId())
                 .toString();
-        assertThat(new String(out.toByteArray()), Matchers.is(expect));
-        System.setOut(def);
+        assertThat(output.toString(), is(expect));
     }
 
     @Test
     public void whenFindByName() {
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        PrintStream def = System.out;
-        System.setOut(new PrintStream(out));
+        Consumer<String> output = System.out::println;
         Tracker tracker = new Tracker();
         Item itemOne = new Item("one");
         tracker.add(itemOne);
-        FindByName act = new FindByName("Find item by name");
+        FindByName act = new FindByName("Find item by name", output);
         act.execute(new StubInput(new String[] {"one"}), tracker);
         String expect = new StringJoiner(System.lineSeparator(), "", System.lineSeparator())
                 .add("Name: \"" + itemOne.getName() + "\" ID Key: " + itemOne.getId())
                 .toString();
-        assertThat(new String(out.toByteArray()), Matchers.is(expect));
-        System.setOut(def);
+        assertThat(output.toString(), is(expect));
     }
 }

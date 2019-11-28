@@ -1,18 +1,20 @@
 package ru.job4j.tracker;
 
+import java.util.function.Consumer;
+
 public class DeleteItem extends BaseAction {
 
-    public DeleteItem(String name) {
-        super(name);
+    public DeleteItem(String name, Consumer<String> output) {
+        super(name, output);
     }
 
     @Override
     public boolean execute(Input input, Tracker tracker) {
         String id = input.askStr("Enter ID: ");
         if (tracker.delete(id)) {
-            System.out.println("Item deleted!");
+            getOutput().accept("Item deleted!");
         } else {
-            System.out.println("Error: ID not found");
+            getOutput().accept("Error: ID not found");
         }
         return true;
     }

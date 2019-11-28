@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -14,7 +15,8 @@ public class StartUITest {
         String[] answers = {"Fix PC"};
         Input input = new StubInput(answers);
         Tracker tracker = new Tracker();
-        UserAction createItem = new CreateItem("Add new Item");
+        Consumer<String> output = System.out::println;
+        UserAction createItem = new CreateItem("Add new Item", output);
         createItem.execute(input, tracker);
         Item created = tracker.findAll(tracker.items).get(0);
         Item expected = new Item("Fix PC");
@@ -25,12 +27,13 @@ public class StartUITest {
     public void whenReplaceItem() {
         Tracker tracker = new Tracker();
         Item item = new Item("new item");
+        Consumer<String> output = System.out::println;
         tracker.add(item);
         String[] answers = {
                 item.getId(), // id сохраненной заявки в объект tracker.
                 "replaced item"
         };
-        UserAction editItem = new EditItem("Edit item");
+        UserAction editItem = new EditItem("Edit item", output);
         editItem.execute(new StubInput(answers), tracker);
         Item replaced = tracker.findById(item.getId());
         assertThat(replaced.getName(), is("replaced item"));
@@ -51,13 +54,14 @@ public class StartUITest {
 
     @Test
     public void whenExit() {
+        Consumer<String> output = System.out::println;
         StubInput input = new StubInput(
                 new String[] {"0"}
         );
-        StubAction action = new StubAction("Stub action");
+        StubAction action = new StubAction("Stub action", output);
         List<UserAction> list = new ArrayList<>();
         list.add(action);
-        new StartUI().init(input, new Tracker(), list);
+        new StartUI(input, new Tracker(), output).init(list);
         assertThat(action.isCall(), is(true));
     }
 

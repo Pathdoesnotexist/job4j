@@ -1,30 +1,25 @@
 package ru.job4j.tracker;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class ShowAll extends BaseAction {
-
-    public ShowAll(String name) {
-        super(name);
+    public ShowAll(String name, Consumer<String> output) {
+        super(name, output);
     }
-
-    private static void printElements(List<Item> items) {
-        for (Item item : items) {
-            if (item != null) {
-                System.out.println("Name: \"" + item.getName() + "\" ID Key: " + item.getId());
-            }
-        }
-    }
-
 
     @Override
     public boolean execute(Input input, Tracker tracker) {
         List<Item> itemList = tracker.findAll(tracker.items);
-        System.out.println("\n=== Show all items ====");
+        getOutput().accept("\n=== Show all items ====");
         if (itemList.size() == 0) {
-            System.out.println("Error: list is empty.");
+            getOutput().accept("Error: list is empty.");
         } else {
-            printElements(itemList);
+            for (Item item : itemList) {
+                if (item != null) {
+                    getOutput().accept("Name: \"" + item.getName() + "\" ID Key: " + item.getId());
+                }
+            }
         }
         return true;
     }

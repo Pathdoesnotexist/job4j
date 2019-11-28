@@ -90,7 +90,6 @@ public class Tracker {
      * @return массив, содержащий все элементы с заданным именем
      */
     public List<Item> findByName(String key) {
-        int pos = 0;
         List<Item> nameList = new ArrayList<>();
         for (Item item : findAll(this.items)) {
             if (item.getName().equals(key)) {

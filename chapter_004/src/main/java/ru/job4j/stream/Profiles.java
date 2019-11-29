@@ -10,6 +10,6 @@ public class Profiles {
      * @return список адрессов
      */
     List<Address> collect(List<Profile> profiles) {
-        return profiles.stream().map(Profile::getAddress).distinct().sorted(new AddressComparator()).collect(Collectors.toList());
+        return profiles.stream().map(Profile::getAddress).sorted(new AddressComparator()).distinct().collect(Collectors.toList());
     }
 }

@@ -30,6 +30,29 @@ public class Address {
     }
 
     @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = city.hashCode();
+        result = prime * result + street.hashCode();
+        result = prime * result + home;
+        result = prime * result + apartment;
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        } else if (o == null || this.getClass() != o.getClass()) {
+            return false;
+        }
+        Address address = (Address) o;
+        return  (this.city.equals(address.getCity()) && this.street.equals(address.getStreet())
+                && this.home == address.getHome() && this.apartment == address.getApartment());
+    }
+
+
+    @Override
     public String toString() {
         return "Город: " + city + " Улица: " + street + " Дом: " + home + " Квартира: " + apartment;
     }

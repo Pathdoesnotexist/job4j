@@ -66,6 +66,8 @@ public class SchoolTest {
         school.group.add(new Student(80, "Ahmedov"));
         school.group.add(new Student(25, "Verisaev"));
         school.group.add(new Student(68, "Yarov"));
+        school.group.add(new Student(68, "Yarov"));
+        school.group.add(new Student(68, "Yarov"));
         school.group.add(new Student(58, "Mehilidze"));
 
         Map<String, Student> resultMap = new HashMap();
@@ -75,5 +77,6 @@ public class SchoolTest {
 
         assertThat(resultOfAhmedov, is(80));
         Assert.assertTrue(resultMap.containsKey("Yarov"));
+        Assert.assertThat(resultMap.size(), is(5));
     }
 }

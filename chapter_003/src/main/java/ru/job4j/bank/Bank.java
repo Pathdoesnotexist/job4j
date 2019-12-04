@@ -1,8 +1,6 @@
 package ru.job4j.bank;
 
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class Bank {
     /**
@@ -22,15 +20,7 @@ public class Bank {
      * @return пользователя с соотвествующим паспортом
      */
     private User userByPassport(String passport) {
-        User result = null;
-        for (Map.Entry<User, ArrayList<Account>> entry : this.treeMap.entrySet()) {
-            User user = entry.getKey();
-            if (user.getPassport().equals(passport)) {
-                result = user;
-                break;
-            }
-        }
-        return result;
+        return this.treeMap.keySet().stream().filter(x -> x.getPassport().equals(passport)).findFirst().orElse(null);
     }
     /**
      * Возвращает счет по реквизитам, если он есть у пользователя или null
@@ -41,13 +31,7 @@ public class Bank {
     private Account accountByRequisites(User user, String requisites) {
         Account result = null;
         if (user != null) {
-            ArrayList<Account> accountList = this.treeMap.get(user);
-            for (Account account : accountList) {
-                if (account.getRequisites().equals(requisites)) {
-                    result = account;
-                    break;
-                }
-            }
+            result = this.treeMap.get(user).stream().filter(x -> x.getRequisites().equals(requisites)).findFirst().orElse(null);
         }
         return result;
     }

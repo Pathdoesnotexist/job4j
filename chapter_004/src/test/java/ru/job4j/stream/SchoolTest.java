@@ -18,20 +18,20 @@ public class SchoolTest {
     @Test
     public void levelOfTest() {
         School school = new School();
-        ArrayList<Student> group = school.group;
         int bound = 50;
 
-        group.add(new Student(50, "Granitcin"));
-        group.add(new Student(80, "Ahmedov"));
-        group.add(new Student(51, "Zaorojkina"));
-        group.add(new Student(96, null));
-        group.add(new Student(25, "Verisaev"));
-        group.add(new Student(49, "Porogov"));
-        group.add(null);
-        group.add(new Student(68, "Yarov"));
-        group.add(new Student(38, "Mehilidze"));
+        List<Student> group = List.of(
+                new Student(50, "Granitcin"),
+                new Student(80, "Ahmedov"),
+                new Student(51, "Zaporojkina"),
+                new Student(96, null),
+                new Student(25, "Verisaev"),
+                new Student(49, "Porogov"),
+                new Student(68, "Yarov"),
+                new Student(38, "Mehilidze"));
 
         ArrayList<Student> filteredGroup = (ArrayList<Student>) school.levelOf(group, bound);
+
         Assert.assertThat(filteredGroup.size(), is(3));
         boolean result = filteredGroup.stream().allMatch(x -> x.getScore() > bound);
         Assert.assertTrue(result);
@@ -87,14 +87,15 @@ public class SchoolTest {
     @Test
     public void whenListToMap() {
         School school = new School();
-        List<Student> group = school.group;
-        group.add(new Student(54, "Lisenko"));
-        group.add(new Student(80, "Ahmedov"));
-        group.add(new Student(25, "Verisaev"));
-        group.add(new Student(68, "Yarov"));
-        group.add(new Student(68, "Yarov"));
-        group.add(new Student(68, "Yarov"));
-        group.add(new Student(58, "Mehilidze"));
+
+        List<Student> group = List.of(
+                new Student(54, "Lisenko"),
+                new Student(80, "Ahmedov"),
+                new Student(25, "Verisaev"),
+                new Student(68, "Yarov"),
+                new Student(68, "Yarov"),
+                new Student(68, "Yarov"),
+                new Student(58, "Mehilidze"));
 
         Map<String, Student> resultMap = school.listToMap(group);
 

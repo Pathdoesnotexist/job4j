@@ -10,10 +10,10 @@ public class ProfilesTest {
     @Test
     public void sortByCity() {
         Profiles wrap = new Profiles();
-        List<Profile> profiles = new ArrayList<>();
-        profiles.add(new Profile(new Address("Moscow ", "Mira ", 15, 269)));
-        profiles.add(new Profile(new Address("Yaroslavl ", "Pravda ", 2, 19)));
-        profiles.add(new Profile(new Address("Arkhangelsk ", "Navratilova ", 68, 85)));
+        List<Profile> profiles = List.of(
+                new Profile(new Address("Moscow ", "Mira ", 15, 269)),
+                new Profile(new Address("Yaroslavl ", "Pravda ", 2, 19)),
+                new Profile(new Address("Arkhangelsk ", "Navratilova ", 68, 85)));
 
         List<Address> addresses = wrap.collect(profiles);
         String expected0 = "Город: Arkhangelsk  Улица: Navratilova  Дом: 68 Квартира: 85";
@@ -28,15 +28,15 @@ public class ProfilesTest {
     @Test
     public void sortByCityAndDeleteClones() {
         Profiles wrap = new Profiles();
-        List<Profile> profiles = new ArrayList<>();
-        profiles.add(new Profile(new Address("Arkhangelsk ", "Navratilova ", 68, 85)));
-        profiles.add(new Profile(new Address("Yaroslavl ", "Pravda ", 2, 19)));
-        profiles.add(new Profile(new Address("Arkhangelsk ", "Navratilova ", 68, 85)));
-        profiles.add(new Profile(new Address("Yaroslavl ", "Pravda ", 2, 42)));
-        profiles.add(new Profile(new Address("Yaroslavl ", "Pravda ", 2, 42)));
-        profiles.add(new Profile(new Address("Yaroslavl ", "Pravda ", 2, 19)));
-        profiles.add(new Profile(new Address("Yaroslavl ", "Pravda ", 2, 42)));
-        profiles.add(new Profile(new Address("Arkhangelsk ", "Navratilova ", 68, 85)));
+        List<Profile> profiles = List.of(
+                new Profile(new Address("Arkhangelsk ", "Navratilova ", 68, 85)),
+                new Profile(new Address("Yaroslavl ", "Pravda ", 2, 19)),
+                new Profile(new Address("Arkhangelsk ", "Navratilova ", 68, 85)),
+                new Profile(new Address("Yaroslavl ", "Pravda ", 2, 42)),
+                new Profile(new Address("Yaroslavl ", "Pravda ", 2, 42)),
+                new Profile(new Address("Yaroslavl ", "Pravda ", 2, 19)),
+                new Profile(new Address("Yaroslavl ", "Pravda ", 2, 42)),
+                new Profile(new Address("Arkhangelsk ", "Navratilova ", 68, 85)));
 
         List<Address> addresses = wrap.collect(profiles);
         String expected0 = "Город: Arkhangelsk  Улица: Navratilova  Дом: 68 Квартира: 85";

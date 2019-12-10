@@ -18,9 +18,9 @@ public class Matrix {
      * Заполнение матрицы случайными значениями от 0 до 10
      * @param matrix пустая матрица, которую надо заполнить
      */
-    public void fillMatrix (Integer[][] matrix) {
+    public void fillMatrix(Integer[][] matrix) {
         for (Integer[] inner : matrix) {
-            for(int j = 0; j < inner.length; j++) {
+            for (int j = 0; j < inner.length; j++) {
                 inner[j] = (int) Math.round(Math.random() * 10);
             }
         }
@@ -30,7 +30,7 @@ public class Matrix {
      * @param matrix матрица значений
      * @return списолк значений
      */
-    public List<Integer> matrixInList (Integer[][] matrix) {
+    public List<Integer> matrixInList(Integer[][] matrix) {
         return Arrays.stream(matrix).flatMap(Stream::of).collect(Collectors.toList()); // x -> Stream.of(x) == Stream::of
     }
 

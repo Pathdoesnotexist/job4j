@@ -1,29 +1,31 @@
 package ru.job4j.exam;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Group {
     /**
-     *
+     * Получения карты k: предмет v: список посещающих студентов
      * @param students список студентов
      * @return карту предметов с именами студентов, посещающих предметы
      */
     public static Map<String, Set<String>> sections(List<Student> students) {
-        Map<String, Set<String>> result = new TreeMap<>();
-        for (Student student : students) {                                      //заполняем карту ключами-предметами и пустыми сетами значений
-            for (String unit : student.getUnits()) {
-                result.putIfAbsent(unit, new HashSet<>());
-            }
-        }
-        for (Map.Entry<String, Set<String>> unitEntry : result.entrySet()) {    //получаем каждую пару карты
-            for (Student student : students) {                                  //получаем каждого студента
-                String unitName = unitEntry.getKey();                           //ключ - имя предмета в карте
-                Set<String> unitStudents = unitEntry.getValue();                //значение - пустой сет
-                if (student.getUnits().contains(unitName)) {                    // если список предметов студента содержит ключ
-                    unitStudents.add(student.getName());                        //добавляем в сет-значение имя студента
-                }
-            }
-        }
-        return result;
+        return students.stream()
+                .flatMap(student -> student.getUnits().stream())
+                .distinct()
+                .collect(Collectors.toMap(unit -> unit, unit -> collectStudentsForUnit(unit, students)));
+    }
+    /**
+     *
+     * @param unitName имя предмета
+     * @param students список студентов
+     * @return набор имен студентов для данного предмета
+     */
+    private static TreeSet<String> collectStudentsForUnit(String unitName, List<Student> students) {
+        return students.stream()
+                .filter(student -> student.getUnits().contains(unitName))
+                .map(Student::getName)
+                .collect(Collectors.toCollection(TreeSet::new));
     }
 }

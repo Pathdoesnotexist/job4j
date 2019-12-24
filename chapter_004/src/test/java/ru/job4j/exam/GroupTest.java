@@ -35,6 +35,13 @@ public class GroupTest {
 
         Map<String, Set<String>> sortResult = Group.sections(classList);
 
-        Assert.assertThat(sortResult.entrySet().toString(), is("[Algebra=[Alex, Andrey], Chemistry=[Olga], Geometry=[Alex, Andrey], History=[Alex, Olga], Literature=[Alex], Music Arts=[Alex], Physics=[Alex, Olga, Andrey]]"));
+        for (Student student : classList) {
+            System.out.println(student.getName() + " посещает: " + student.getUnits());
+        }
+        System.out.println(Group.sections(classList).entrySet());
+
+        Assert.assertThat(classList.get(2).getName(), is("Olga"));
+        Assert.assertThat(classList.get(2).getUnits().toString(), is("[Chemistry, History, Physics]"));
+        Assert.assertThat(sortResult.entrySet().toString(), is("[Geometry=[Alex, Andrey], Chemistry=[Olga], Algebra=[Alex, Andrey], Literature=[Alex], History=[Alex, Olga], Physics=[Alex, Andrey, Olga], Music Arts=[Alex]]"));
     }
 }

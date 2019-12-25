@@ -17,8 +17,8 @@ public class EvenNumbersIterator implements Iterator<Integer> {
     @Override
     public boolean hasNext() {
         boolean result = false;
-        for (int i = this.counter; i < numbers.length ; i++) {
-            if(numbers[i] % 2 == 0) {
+        for (int i = this.counter; i < numbers.length; i++) {
+            if (numbers[i] % 2 == 0) {
                 result = true;
                 break;
             }
@@ -32,8 +32,8 @@ public class EvenNumbersIterator implements Iterator<Integer> {
     @Override
     public Integer next() {
         int result = 0;
-        for (int i = this.counter; i < numbers.length ; i++) {
-            if(numbers[i] % 2 == 0) {
+        for (int i = this.counter; i < numbers.length; i++) {
+            if (numbers[i] % 2 == 0) {
                 result = numbers[i];
                 this.counter = i + 1;
                 break;

@@ -1,10 +1,18 @@
 package ru.job4j.iterator;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
+
+/**
+ * Итератор двумерного массива
+ * @author Andrey Varshavsky
+ * @version 1.0
+ * @since 27.12.2019
+ */
 public class EvenNumbersIterator implements Iterator<Integer> {
     final int[] numbers;
-    private int counter = 0;
+    private int pointer = 0;
 
     public EvenNumbersIterator(int[] numbers) {
         this.numbers = numbers;
@@ -17,8 +25,9 @@ public class EvenNumbersIterator implements Iterator<Integer> {
     @Override
     public boolean hasNext() {
         boolean result = false;
-        for (int i = this.counter; i < numbers.length; i++) {
+        for (int i = this.pointer; i < numbers.length; i++) {
             if (numbers[i] % 2 == 0) {
+                pointer = i;
                 result = true;
                 break;
             }
@@ -31,14 +40,9 @@ public class EvenNumbersIterator implements Iterator<Integer> {
      */
     @Override
     public Integer next() {
-        int result = 0;
-        for (int i = this.counter; i < numbers.length; i++) {
-            if (numbers[i] % 2 == 0) {
-                result = numbers[i];
-                this.counter = i + 1;
-                break;
-            }
+        if(!hasNext()) {
+            throw new NoSuchElementException("Even numbers not found");
         }
-        return result;
+        return numbers[pointer++];
     }
 }

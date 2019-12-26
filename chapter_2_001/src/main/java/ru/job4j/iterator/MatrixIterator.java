@@ -11,19 +11,20 @@ import java.util.*;
  */
 public class MatrixIterator implements Iterator<Integer> {
     private int[][] matrix;
-    private int overallMatrixLength;
-    private int pointer = 0;
     private int i = 0;
     private int j = 0;
 
     public MatrixIterator(int[][] matrix) {
         this.matrix = matrix;
-        this.overallMatrixLength = (int) Arrays.stream(matrix).flatMapToInt(Arrays::stream).count();
     }
 
     @Override
     public boolean hasNext() {
-        return pointer < overallMatrixLength;
+        boolean result = false;
+        if (i < matrix.length && j < matrix[i].length) {
+            result = true;
+        }
+        return result;
     }
 
     @Override
@@ -41,7 +42,6 @@ public class MatrixIterator implements Iterator<Integer> {
             System.out.println("No such element.");
             result = matrix[i - 1][j];
         }
-        pointer++;
         return result;
     }
 }

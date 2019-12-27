@@ -5,7 +5,7 @@ import java.util.NoSuchElementException;
 
 
 /**
- * Итератор двумерного массива
+ * Итератор четных чисел в массиве
  * @author Andrey Varshavsky
  * @version 1.0
  * @since 27.12.2019
@@ -40,7 +40,7 @@ public class EvenNumbersIterator implements Iterator<Integer> {
      */
     @Override
     public Integer next() {
-        if(!hasNext()) {
+        if (!hasNext()) {
             throw new NoSuchElementException("Even numbers not found");
         }
         return numbers[pointer++];

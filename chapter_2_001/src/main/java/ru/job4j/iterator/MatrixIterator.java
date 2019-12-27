@@ -13,35 +13,26 @@ public class MatrixIterator implements Iterator<Integer> {
     private int[][] matrix;
     private int i = 0;
     private int j = 0;
-
     public MatrixIterator(int[][] matrix) {
         this.matrix = matrix;
     }
 
     @Override
     public boolean hasNext() {
-        boolean result = false;
-        if (i < matrix.length && j < matrix[i].length) {
-            result = true;
-        }
-        return result;
+        return i < matrix.length && j < matrix[i].length;
     }
 
     @Override
     public Integer next() {
-        int result;
-        try {
-            result = matrix[i][j];
-            if (j < matrix[i].length - 1) {
-                j++;
-            } else {
-                i++;
-                j = 0;
-            }
-        } catch (ArrayIndexOutOfBoundsException ex) {
-            System.out.println("No such element.");
-            result = matrix[i - 1][j];
+        int result = matrix[i][j];
+    if (hasNext()) {
+        if (j < matrix[i].length - 1) {
+            j++;
+        } else {
+            i++;
+            j = 0;
         }
+    }
         return result;
     }
 }

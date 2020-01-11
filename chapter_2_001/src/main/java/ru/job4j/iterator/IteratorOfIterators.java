@@ -1,6 +1,8 @@
 package ru.job4j.iterator;
 
 
+import org.w3c.dom.ls.LSOutput;
+
 import java.util.*;
 
 /**
@@ -13,7 +15,7 @@ import java.util.*;
 public class IteratorOfIterators {
 
     public Iterator<Integer> convert(Iterator<Iterator<Integer>> its) {
-        return new Iterator<>() {
+        return new Iterator<Integer>() {
             Iterator<Integer> inner = its.next();
 
             @Override
@@ -31,20 +33,11 @@ public class IteratorOfIterators {
 
             @Override
             public Integer next() {
-                Integer next;
-                if (inner.hasNext()) {
-                    next = inner.next();
-                } else if (its.hasNext()) {
-                        inner = its.next();
-                        next = inner.next();
-                    } else {
-                        throw new NoSuchElementException("No data found");
-                    }
-                return next;
+                if (!hasNext()) {
+                    throw new NoSuchElementException("No data found");
+                }
+                return inner.next();
             }
         };
     }
 }
-
-
-

@@ -20,15 +20,10 @@ public class IteratorOfIterators {
 
             @Override
             public boolean hasNext() {
-                boolean hasNext = false;
-                if (inner != null) {
-                    hasNext = inner.hasNext();
-                    if ((!hasNext) && (its.hasNext())) {
-                        inner = its.next();
-                        hasNext = inner.hasNext();
-                    }
+                while (its.hasNext() && !inner.hasNext()){
+                    inner = its.next();
                 }
-                return hasNext;
+                return inner.hasNext();
             }
 
             @Override

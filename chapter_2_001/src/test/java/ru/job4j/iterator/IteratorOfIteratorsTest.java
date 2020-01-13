@@ -23,6 +23,41 @@ public class IteratorOfIteratorsTest {
         IteratorOfIterators iteratorIterator = new IteratorOfIterators();
         it = iteratorIterator.convert(its);
     }
+    @Test
+    public void hasNextShouldReturnSecondTrueInCaseOfEmptyIterators1() {
+        Iterator<Integer> it1 = (new ArrayList<Integer>()).iterator();
+        Iterator<Integer> it2 = (Arrays.asList(1)).iterator();
+        Iterator<Integer> it3 = (Arrays.asList(2)).iterator();
+        Iterator<Iterator<Integer>> its = Arrays.asList(it1, it2, it3).iterator();
+        IteratorOfIterators iteratorIterator = new IteratorOfIterators();
+        it = iteratorIterator.convert(its);
+        assertThat(it.hasNext(), is(true));
+        it.next();
+        assertThat(it.hasNext(), is(true));
+        it.next();
+        assertThat(it.hasNext(), is(false));
+    }
+    @Test
+    public void hasNextShouldReturnTrueInCaseOfEmptyIterators1and2() {
+        Iterator<Integer> it1 = (new ArrayList<Integer>()).iterator();
+        Iterator<Integer> it2 = (new ArrayList<Integer>()).iterator();
+        Iterator<Integer> it3 = (Arrays.asList(1)).iterator();
+        Iterator<Iterator<Integer>> its = Arrays.asList(it1, it2, it3).iterator();
+        IteratorOfIterators iteratorIterator = new IteratorOfIterators();
+        it = iteratorIterator.convert(its);
+        assertThat(it.hasNext(), is(true));
+    }
+
+    @Test
+    public void hasNextShouldReturnFalseInCaseOfEmptyIterators() {
+        Iterator<Integer> it1 = (new ArrayList<Integer>()).iterator();
+        Iterator<Integer> it2 = (new ArrayList<Integer>()).iterator();
+        Iterator<Integer> it3 = (new ArrayList<Integer>()).iterator();
+        Iterator<Iterator<Integer>> its = Arrays.asList(it1, it2, it3).iterator();
+        IteratorOfIterators iteratorIterator = new IteratorOfIterators();
+        it = iteratorIterator.convert(its);
+        assertThat(it.hasNext(), is(false));
+    }
 
     @Test
     public void hasNextNextSequentialInvocation() {
@@ -73,17 +108,6 @@ public class IteratorOfIteratorsTest {
         assertThat(it.next(), is(7));
         assertThat(it.next(), is(8));
         assertThat(it.next(), is(9));
-    }
-
-    @Test
-    public void hasNextShouldReturnFalseInCaseOfEmptyIterators() {
-        Iterator<Integer> it1 = (new ArrayList<Integer>()).iterator();
-        Iterator<Integer> it2 = (new ArrayList<Integer>()).iterator();
-        Iterator<Integer> it3 = (new ArrayList<Integer>()).iterator();
-        Iterator<Iterator<Integer>> its = Arrays.asList(it1, it2, it3).iterator();
-        IteratorOfIterators iteratorIterator = new IteratorOfIterators();
-        it = iteratorIterator.convert(its);
-        assertThat(it.hasNext(), is(false));
     }
 
     @Test(expected = NoSuchElementException.class)

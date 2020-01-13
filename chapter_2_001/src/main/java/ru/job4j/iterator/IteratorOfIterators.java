@@ -15,12 +15,12 @@ import java.util.*;
 public class IteratorOfIterators {
 
     public Iterator<Integer> convert(Iterator<Iterator<Integer>> its) {
-        return new Iterator<Integer>() {
+        return new Iterator<>() {
             Iterator<Integer> inner = its.next();
 
             @Override
             public boolean hasNext() {
-                while (its.hasNext() && !inner.hasNext()){
+                while (its.hasNext() && !inner.hasNext()) {
                     inner = its.next();
                 }
                 return inner.hasNext();

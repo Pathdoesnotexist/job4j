@@ -12,11 +12,11 @@ import java.util.NoSuchElementException;
  * @since 11.01.2020
  */
 public class SimpleArray<T> {
-    private final Object[] array;
+    private final T[] array;
     private int pointer = 0;
 
     public SimpleArray(int size) {
-        this.array = new Object[size];
+        this.array = (T[]) new Object[size];
     }
 
     /**
@@ -60,7 +60,7 @@ public class SimpleArray<T> {
      *  возвращает итератор, предназначенный для обхода данной структуры.
      * @return итератор
      */
-    public Iterator<Object> iterator() throws NoSuchElementException {
+    public Iterator<T> iterator() throws NoSuchElementException {
         return Arrays.asList(this.array).iterator();
     }
 

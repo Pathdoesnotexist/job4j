@@ -15,6 +15,7 @@ public class SimpleArray<T> {
     private final T[] array;
     private int pointer = 0;
 
+    @SuppressWarnings("unchecked")
     public SimpleArray(int size) {
         this.array = (T[]) new Object[size];
     }

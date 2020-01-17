@@ -15,9 +15,7 @@ public class AbstractStore<T extends Base> implements Store<T> {
      */
     @Override
     public void add(T model) {
-        if (this.simpleArray.iterator().hasNext()) {
             this.simpleArray.add(model);
-        }
     }
     /**
      * замена элемента новым элементом
@@ -56,13 +54,9 @@ public class AbstractStore<T extends Base> implements Store<T> {
      * @return элемент массива
      */
     @Override
-    @SuppressWarnings("unchecked")
-    public T findById(String id) throws NullPointerException {
+    public T findById(String id) {
         int index = this.getIndex(id);
-        if (index == -1) {
-            throw new NullPointerException("No matches found for id: " + id);
-        }
-        return (T) this.simpleArray.get(index);
+        return (index == -1) ? null : this.simpleArray.get(index);
     }
     /**
      * поиск индекса элемента в массиве по идентификатору

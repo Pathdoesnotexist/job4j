@@ -24,7 +24,7 @@ public class SimpleArray<T> {
      * добавляет указанный элемент (model) в первую свободную ячейку
      * @param model - добавляемый элемент
      */
-    public void add(T model) {
+    public void add(T model) throws ArrayIndexOutOfBoundsException {
         this.array[pointer++] = model;
     }
 

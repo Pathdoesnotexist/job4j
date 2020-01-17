@@ -29,9 +29,10 @@ public class AbstractStoreTest {
         Assert.assertThat(userStore.findById("67b").getId(), is("67b"));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void whenElementNotFoundById() {
-        userStore.findById("ka-boom");
+        User expected = userStore.findById("ka-boom");
+        Assert.assertNull(expected);
     }
 
     @Test

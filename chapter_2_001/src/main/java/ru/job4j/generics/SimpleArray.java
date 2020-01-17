@@ -32,7 +32,7 @@ public class SimpleArray<T> {
      * возвращает элемент, расположенный по указанному индексу
      * @param index индекс элемента, который необходимо получить
      */
-    public Object get(int index) throws ArrayIndexOutOfBoundsException {
+    public T get(int index) throws ArrayIndexOutOfBoundsException {
         return this.array[index];
     }
 
@@ -61,8 +61,26 @@ public class SimpleArray<T> {
      *  возвращает итератор, предназначенный для обхода данной структуры.
      * @return итератор
      */
-    public Iterator<T> iterator() throws NoSuchElementException {
-        return Arrays.asList(this.array).iterator();
+    public Iterator<T> iterator() {
+        return new Iterator<>() {
+            private int iteratorPointer = -1;
+
+            @Override
+            public boolean hasNext() {
+                return iteratorPointer < array.length - 1;
+            }
+
+            @Override
+            public T next() {
+                T nextEl;
+                if (!hasNext()) {
+                    throw new NoSuchElementException("Out of Bounds");
+                }
+                iteratorPointer++;
+                nextEl = array[iteratorPointer];
+                return nextEl;
+            }
+        };
     }
 
 }

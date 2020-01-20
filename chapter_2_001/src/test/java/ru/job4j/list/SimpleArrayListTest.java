@@ -1,5 +1,6 @@
 package ru.job4j.list;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.Before;
 import static org.hamcrest.Matchers.is;
@@ -23,20 +24,37 @@ public class SimpleArrayListTest {
     }
 
     @Test
+    public void whenAddThreeElementsThenUseGetZeroResultThree() {
+        assertThat(list.get(0), is(3));
+    }
+
+    @Test
     public void whenAddThreeElementsThenUseGetSizeResultThree() {
         assertThat(list.getSize(), is(3));
     }
 
     @Test
-    public void whenDeleteFirstElementThenUseGetFirstResultTwo() {
+    public void whenDeleteFirstElementThenUseGetFirstResultTwo() throws Exception {
         list.delete();
         assertThat(list.get(0), is(2));
     }
+    @Test
+    public void whenDeleteFirstReturnThree() throws Exception {
+        Assert.assertThat(list.delete(), is (3));
+    }
 
     @Test
-    public void whenDeleteTwoElementsThenUseGetSizeResultOne() {
+    public void whenDeleteTwoElementsThenUseGetSizeResultOne() throws Exception {
         list.delete();
         list.delete();
         assertThat(list.getSize(), is(1));
+    }
+
+    @Test (expected = Exception.class)
+    public void whenDeleteAllPlusOneElementsThrowsException() throws Exception {
+        list.delete();
+        list.delete();
+        list.delete();
+        list.delete();
     }
 }

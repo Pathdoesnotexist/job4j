@@ -22,13 +22,14 @@ public class SimpleArrayList<E> {
     /**
      * Реализовать метод удаления первого элемент в списке.
      */
-    public E delete() {
-        E previousFirst = null;
-        if (size > 0) {
-            previousFirst = this.first.data;
-            this.first = this.first.next;
-            size--;
+    public E delete() throws Exception {
+        if (size == 0) {
+            throw new Exception("List is empty!");
         }
+        E previousFirst = this.first.data;
+        this.first = this.first.next;
+        size--;
+
         return previousFirst;
     }
 

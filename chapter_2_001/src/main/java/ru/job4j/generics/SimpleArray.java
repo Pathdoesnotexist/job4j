@@ -17,15 +17,21 @@ public class SimpleArray<T> {
 
     @SuppressWarnings("unchecked")
     public SimpleArray(int size) {
-        this.array = (T[]) new Object[size];
+        array = (T[]) new Object[size];
     }
 
     /**
      * добавляет указанный элемент (model) в первую свободную ячейку
      * @param model - добавляемый элемент
+     * @return результат операции
      */
-    public void add(T model) throws ArrayIndexOutOfBoundsException {
-        this.array[pointer++] = model;
+    public boolean add(T model) {
+        boolean result = false;
+        if (pointer < array.length) {
+            array[pointer++] = model;
+            result = true;
+        }
+        return result;
     }
 
     /**
@@ -33,28 +39,41 @@ public class SimpleArray<T> {
      * @param index индекс элемента, который необходимо получить
      */
     public T get(int index) throws ArrayIndexOutOfBoundsException {
-        return this.array[index];
+        return array[index];
     }
 
     /**
      * заменяет новым элементом элемент в массиве по индексу
      * @param index - индекс элемента-цели
      * @param model - добавляемый элемент
+     * @return результат операции
      */
-    public void set(int index, T model) throws ArrayIndexOutOfBoundsException {
-        this.array[index] = model;
+    public boolean set(int index, T model) {
+        boolean result = false;
+        if (index < array.length) {
+            array[index] = model;
+            result = true;
+        }
+        return result;
     }
 
     /**
      * удаляет элемент по указанному индексу
      * @param index - индекс удаляемого элемента
+     * @return результат операции
      */
-    public void remove(int index) throws ArrayIndexOutOfBoundsException {
-        if (index != this.array.length - 1) {
-            System.arraycopy(this.array, index + 1, this.array, index, this.array.length - index - 1);
-        }
+
+    public boolean remove(int index) {
+        boolean result = false;
+        if (index <= pointer - 1) {
+            if (index < pointer - 1) {
+                System.arraycopy(this.array, index + 1, this.array, index, this.array.length - pointer + 1);
+            }
             pointer--;
             this.array[pointer] = null;
+            result = true;
+            }
+        return result;
     }
 
     /**
@@ -82,5 +101,4 @@ public class SimpleArray<T> {
             }
         };
     }
-
 }

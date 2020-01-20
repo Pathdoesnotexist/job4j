@@ -23,14 +23,30 @@ public class SimpleArrayTest {
         simpleArray.add(1.25);
     }
 
-    @Test(expected = ArrayIndexOutOfBoundsException.class)
-    public void whenAddElementToFilledArrayThrowsException() {
-        simpleArray.add("Ka-boom!");
+    @Test
+    public void whenAddElementToFilledArrayReturnFalse() {
+        Assert.assertFalse(simpleArray.add("Ka-boom!"));
     }
 
-    @Test(expected = ArrayIndexOutOfBoundsException.class)
-    public void whenDeleteOutOfRangeThrowsException() {
-        simpleArray.remove(6);
+    @Test
+    public void whenDeleteElementFromFilledThenAddReturnTrue() {
+        simpleArray.remove(0);
+        Assert.assertTrue(simpleArray.add("AddMe"));
+    }
+
+    @Test
+    public void whenSetElementReturnFalse() {
+        Assert.assertFalse(simpleArray.set(6, "f"));
+    }
+
+    @Test
+    public void whenSetElementReturnTrue() {
+        Assert.assertTrue(simpleArray.set(1, "f"));
+    }
+
+    @Test
+    public void whenDeleteOutOfRangeReturnFalse() {
+        Assert.assertFalse(simpleArray.remove(6));
     }
 
     @Test
@@ -52,6 +68,23 @@ public class SimpleArrayTest {
         simpleArray.remove(4);
         Assert.assertNull(simpleArray.get(4));
     }
+
+    @Test
+    public void whenDeleteThreeElementsAndThirdShouldGetNull() {
+        simpleArray.remove(2);
+        simpleArray.remove(2);
+        simpleArray.remove(2);
+        Assert.assertNull(simpleArray.get(3));
+    }
+
+    @Test
+    public void whenDeleteThreeThenDeleteEmptyShouldReturnFalse() {
+        simpleArray.remove(2);
+        simpleArray.remove(2);
+        simpleArray.remove(2);
+        Assert.assertFalse(simpleArray.remove(4));
+    }
+
     @Test
     public void whenDeleteFirstAndFirstShouldBeInt() {
         simpleArray.remove(0);

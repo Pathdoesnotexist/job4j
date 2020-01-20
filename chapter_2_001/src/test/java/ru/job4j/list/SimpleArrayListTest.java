@@ -40,7 +40,7 @@ public class SimpleArrayListTest {
     }
     @Test
     public void whenDeleteFirstReturnThree() throws Exception {
-        Assert.assertThat(list.delete(), is (3));
+        Assert.assertThat(list.delete(), is(3));
     }
 
     @Test

@@ -1,6 +1,9 @@
 package ru.job4j.list;
 
+import java.util.Arrays;
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * Динамический контейнер
@@ -10,8 +13,13 @@ import java.util.Iterator;
  */
 
 public class SimpleContainer<E> implements Iterable<E> {
-    Object[] container;
-    int pointer;
+    private Object[] container;
+    private int pointer;
+    private int modCount;
+
+    public SimpleContainer(int size) {
+        container = new Object[size];
+    }
 
     /**
      * Добавление элемента в конец списка
@@ -19,18 +27,18 @@ public class SimpleContainer<E> implements Iterable<E> {
      */
     public void add(E value) {
         if (pointer == container.length) {
-            adjustContainerLength();
+            doubleContainerLength(container);
         }
-
-
+        container[pointer++] = value;
      }
 
     /**
-     * Увеличение длинны списка при переполнении
-     *
+     * Увеличение длинны массива при переполнении
+     * @param container заполненный массив с данными
      */
-    private void adjustContainerLength() {
-
+    private void doubleContainerLength(Object[] container) {
+        this.container = Arrays.copyOf(container, container.length * 2);
+        this.modCount++;
     }
 
     /**
@@ -38,28 +46,40 @@ public class SimpleContainer<E> implements Iterable<E> {
      * @param index индекс элемента списка
      * @return элемент списка
      */
+    @SuppressWarnings("unchecked")
     public E get(int index) {
-
-        return null;
+        if (index >= container.length) {
+            throw new ArrayIndexOutOfBoundsException("Index does not exist");
+        }
+        return (E) container[index];
     }
-//    Итератор должен реализовывать fail-fast поведение, т.е. если с момента создания итератора коллекция подверглась структурному
-//    изменению, итератор должен кидать ConcurrentModificationException.
-//    Это достигается через введение счетчика изменений - modCount.
-//    Каждая операция, которая структурно модифицирует коллекцию должна инкрементировать этот счетчик.
-//    В свою очередь итератор запоминает значение этого счетчика на момент своего создания (expectedModCount),
-//    а затем на каждой итерации сравнивает сохраненное значение, с текущим значением поля modCount,
-//    если они отличаются, то генерируется исключение.
+
     @Override
     public Iterator<E> iterator() {
         return new Iterator<>() {
-            @Override
-            public boolean hasNext() {
-                return false;
+            int expectedModCount = modCount;
+            int iteratorPointer = 0;
+
+            private void modifiedOrNot(int modCount) {
+            if (expectedModCount < modCount) {
+                throw new ConcurrentModificationException("Container has been changed!");
+                }
             }
 
             @Override
+            public boolean hasNext() {
+                modifiedOrNot(modCount);
+                return iteratorPointer < container.length;
+            }
+
+            @Override
+            @SuppressWarnings("unchecked")
             public E next() {
-                return null;
+                modifiedOrNot(modCount);
+                if (!hasNext()) {
+                    throw new NoSuchElementException("Element not found");
+                }
+                return (E) container[iteratorPointer++];
             }
         };
     }

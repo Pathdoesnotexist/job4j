@@ -12,12 +12,12 @@ import java.util.NoSuchElementException;
  * @since 18.01.2020
  */
 
-public class SimpleContainer<E> implements Iterable<E> {
+public class SimpleArrayContainer<E> implements Iterable<E> {
     private Object[] container;
     private int pointer;
     private int modCount;
 
-    public SimpleContainer(int size) {
+    public SimpleArrayContainer(int size) {
         container = new Object[size];
     }
 

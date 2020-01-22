@@ -11,7 +11,7 @@ import java.util.NoSuchElementException;
  * @since 21.01.2020
  */
 public class SimpleListContainer<E> implements Iterable<E> {
-    private Node<E> first;
+    Node<E> first;
     private int size;
 
     /**
@@ -75,7 +75,7 @@ public class SimpleListContainer<E> implements Iterable<E> {
     /**
      * Класс предназначен для хранения данных.
      */
-    private static class Node<E> {
+    static class Node<E> {
         E data;
         Node<E> next;
 

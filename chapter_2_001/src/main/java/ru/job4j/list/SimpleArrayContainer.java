@@ -11,7 +11,6 @@ import java.util.NoSuchElementException;
  * @version 1.0
  * @since 18.01.2020
  */
-
 public class SimpleArrayContainer<E> implements Iterable<E> {
     private Object[] container;
     private int pointer;
@@ -30,6 +29,7 @@ public class SimpleArrayContainer<E> implements Iterable<E> {
             doubleContainerLength(container);
         }
         container[pointer++] = value;
+        this.modCount++;
      }
 
     /**
@@ -38,7 +38,6 @@ public class SimpleArrayContainer<E> implements Iterable<E> {
      */
     private void doubleContainerLength(Object[] container) {
         this.container = Arrays.copyOf(container, container.length * 2);
-        this.modCount++;
     }
 
     /**
@@ -46,10 +45,11 @@ public class SimpleArrayContainer<E> implements Iterable<E> {
      * @param index индекс элемента списка
      * @return элемент списка
      */
+
     @SuppressWarnings("unchecked")
     public E get(int index) {
-        if (index >= container.length) {
-            throw new ArrayIndexOutOfBoundsException("Index does not exist");
+        if (index >= pointer) {
+            throw new ArrayIndexOutOfBoundsException("Element does not exist yet");
         }
         return (E) container[index];
     }
@@ -69,7 +69,7 @@ public class SimpleArrayContainer<E> implements Iterable<E> {
             @Override
             public boolean hasNext() {
                 modifiedOrNot(modCount);
-                return iteratorPointer < container.length;
+                return iteratorPointer < pointer;
             }
 
             @Override

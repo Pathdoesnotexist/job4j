@@ -33,9 +33,10 @@ public class SimpleArrayContainerTest {
     }
 
     @Test
-    public void whenAddFourElementsThenSixthElementIsNull() {
+    public void whenAddTwoElementsThenFifthElementIs55() {
         list.add(44);
-        assertThat(list.get(5), is((Object) null));
+        list.add(55);
+        assertThat(list.get(4), is(55));
     }
 
     @Test (expected = ConcurrentModificationException.class)

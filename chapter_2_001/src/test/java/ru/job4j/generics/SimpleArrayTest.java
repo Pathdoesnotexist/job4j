@@ -63,18 +63,10 @@ public class SimpleArrayTest {
         Assert.assertFalse((boolean) simpleArray.get(0));
         Assert.assertThat(simpleArray.get(2), is("Third"));
     }
-    @Test
+    @Test (expected = ArrayIndexOutOfBoundsException.class)
     public void whenDeleteLastShouldGetNull() {
         simpleArray.remove(4);
         Assert.assertNull(simpleArray.get(4));
-    }
-
-    @Test
-    public void whenDeleteThreeElementsAndThirdShouldGetNull() {
-        simpleArray.remove(2);
-        simpleArray.remove(2);
-        simpleArray.remove(2);
-        Assert.assertNull(simpleArray.get(3));
     }
 
     @Test

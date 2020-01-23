@@ -38,7 +38,10 @@ public class SimpleArray<T> {
      * возвращает элемент, расположенный по указанному индексу
      * @param index индекс элемента, который необходимо получить
      */
-    public T get(int index) throws ArrayIndexOutOfBoundsException {
+    public T get(int index) {
+        if (index >= pointer) {
+            throw new ArrayIndexOutOfBoundsException("Element does not exist");
+        }
         return array[index];
     }
 
@@ -50,7 +53,7 @@ public class SimpleArray<T> {
      */
     public boolean set(int index, T model) {
         boolean result = false;
-        if (index < array.length) {
+        if (index < pointer) {
             array[index] = model;
             result = true;
         }

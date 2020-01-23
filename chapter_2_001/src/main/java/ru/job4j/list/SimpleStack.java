@@ -1,7 +1,7 @@
 package ru.job4j.list;
 
 /**
- * Простой стэк на базе связанного списка
+ * Простой стек на базе связанного списка
  * @author Andrey Varshavsky
  * @version 1.0
  * @since 22.01.2020

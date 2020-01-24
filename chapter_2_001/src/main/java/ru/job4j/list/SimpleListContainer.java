@@ -12,15 +12,22 @@ import java.util.NoSuchElementException;
  */
 public class SimpleListContainer<E> implements Iterable<E> {
     Node<E> first;
-    private int size;
+    Node<E> last;
+    private int size = 0;
 
     /**
      * Метод вставляет в начало списка данные.
      */
     public void add(E data) {
         Node<E> newNode = new Node<>(data);
-        newNode.next = this.first;
-        this.first = newNode;
+        if (size == 0) {
+            this.first = newNode;
+            this.last = newNode;
+        } else {
+            newNode.previous = this.last;
+            this.last.next = newNode;
+            this.last = newNode;
+        }
         this.size++;
     }
 
@@ -29,8 +36,12 @@ public class SimpleListContainer<E> implements Iterable<E> {
      */
     public E get(int index) {
         Node<E> result = this.first;
-        for (int i = 0; i < index; i++) {
-            result = result.next;
+        if (index < size) {
+            for (int i = 1; i <= index; i++) {
+                result = result.next;
+            }
+        } else {
+            throw new ArrayIndexOutOfBoundsException("Element does not exist yet.");
         }
         return result.data;
     }
@@ -40,7 +51,7 @@ public class SimpleListContainer<E> implements Iterable<E> {
         return new Iterator<>() {
             final int iterableSize = size;
             int iteratorPointer = 0;
-            Node<E> nextNode;
+            Node<E> nextNode = first;
 
             private void modifiedOrNot(int actualSize) {
                 if (iterableSize != actualSize) {
@@ -61,9 +72,7 @@ public class SimpleListContainer<E> implements Iterable<E> {
                 if (!hasNext()) {
                     throw new NoSuchElementException("Element not found");
                 }
-                if (iteratorPointer == 0) {
-                    nextNode = first;
-                } else {
+                if (iteratorPointer > 0) {
                     nextNode = nextNode.next;
                 }
                 iteratorPointer++;
@@ -78,6 +87,7 @@ public class SimpleListContainer<E> implements Iterable<E> {
     static class Node<E> {
         E data;
         Node<E> next;
+        Node<E> previous;
 
         Node(E data) {
             this.data = data;

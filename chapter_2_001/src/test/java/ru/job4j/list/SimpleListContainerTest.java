@@ -25,9 +25,13 @@ public class SimpleListContainerTest {
 
     @Test
     public void whenAddElementThanGetIt() {
-        Assert.assertThat(listContainer.get(0), is(1.25));
         listContainer.add(1000);
-        Assert.assertThat(listContainer.get(0), is(1000));
+        Assert.assertThat(listContainer.get(5), is(1000));
+    }
+
+    @Test (expected = ArrayIndexOutOfBoundsException.class)
+    public void whenGetElementThanThrowException() {
+        Assert.assertThat(listContainer.get(5), is(1000));
     }
 
     @Test (expected = ConcurrentModificationException.class)

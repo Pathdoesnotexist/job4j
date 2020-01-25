@@ -9,7 +9,7 @@ package ru.job4j.list;
 public class SimpleStackContainer<T> extends SimpleContainer<T> {
 
     /**
-     * Возвращает значение первого элемента и удаляет его из коллекции
+     * Возвращает значение первого элемента и удаляет его из коллекции (LIFO)
      * @return значение удаляемого элемента коллекции
      */
     public T poll() {

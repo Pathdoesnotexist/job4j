@@ -12,21 +12,21 @@ public class SimpleStackTest {
     @Before
     public void setUp() {
         stack = new SimpleStack<>();
-        stack.add(1);
-        stack.add(2);
-        stack.add(3);
+        stack.push(1);
+        stack.push(2);
+        stack.push(3);
     }
 
     @Test
-    public void whenPushElementThanPollit() {
+    public void whenPushElementThanPollIt() {
         stack.push(1000);
         Assert.assertThat(stack.poll(), is(1000));
     }
 
     @Test
-    public void whenPollThreeTimesAndLastIsOne() {
-        stack.poll();
-        stack.poll();
+    public void whenPollReturnAddedInLIFOOrder() {
+        Assert.assertThat(stack.poll(), is(3));
+        Assert.assertThat(stack.poll(), is(2));
         Assert.assertThat(stack.poll(), is(1));
     }
 }

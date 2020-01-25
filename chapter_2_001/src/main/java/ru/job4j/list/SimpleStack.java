@@ -14,15 +14,31 @@ public class SimpleStack<T> extends SimpleListContainer<T> {
      */
     public T poll() {
         T result = first.data;
-        first = first.next;
+        if (size == 1) {
+            last = null;
+            first = null;
+        } else {
+            first = first.next;
+            first.previous = null;
+        }
+        size--;
         return result;
     }
 
     /**
-     * Помещает значение в коллекцию
+     * Помещает значение в начало коллекции
      * @param value добавляемое в коллекцию значение
      */
     public void push(T value) {
-        add(value);
+        Node<T> newFirst = new Node<>(value);
+        if (size == 0) {
+            first = newFirst;
+            last = newFirst;
+        } else {
+            first.previous = newFirst;
+            newFirst.next = first;
+            first = newFirst;
+        }
+        this.size++;
     }
 }

@@ -13,7 +13,7 @@ import java.util.NoSuchElementException;
 public class SimpleListContainer<E> implements Iterable<E> {
     Node<E> first;
     Node<E> last;
-    private int size = 0;
+    int size = 0;
 
     /**
      * Метод вставляет в начало списка данные.

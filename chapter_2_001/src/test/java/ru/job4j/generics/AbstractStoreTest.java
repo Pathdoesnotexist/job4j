@@ -43,14 +43,6 @@ public class AbstractStoreTest {
         Assert.assertThat(userStore.findById("00z").getId(), is("00z"));
     }
 
-    @Test(expected = ArrayIndexOutOfBoundsException.class)
-    public void whenAddElementInFullArray() {
-        roleStore.add(new Role("02w"));
-        roleStore.add(new Role("13r"));
-        roleStore.add(new Role("54h"));
-        roleStore.add(new Role("ka-boom"));
-    }
-
     @Test
     public void whenReplaceElement() {
         boolean result = userStore.replace("23t", new User("33f"));

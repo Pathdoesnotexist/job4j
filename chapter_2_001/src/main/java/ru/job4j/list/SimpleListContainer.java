@@ -10,13 +10,11 @@ import java.util.NoSuchElementException;
  * @version 1.0
  * @since 21.01.2020
  */
-public class SimpleListContainer<E> implements Iterable<E> {
-    Node<E> first;
-    Node<E> last;
-    int size = 0;
+public class SimpleListContainer<E> extends SimpleContainer<E> {
 
     /**
-     * Метод вставляет в начало списка данные.
+     * Добавление данных в список
+     * @param data добавляемые данные
      */
     public void add(E data) {
         Node<E> newNode = new Node<>(data);
@@ -32,7 +30,9 @@ public class SimpleListContainer<E> implements Iterable<E> {
     }
 
     /**
-     * Метод получения элемента по индексу.
+     * получение данных по индексу элемента списка
+     * @param index индекс элемента
+     * @return данные элемента
      */
     public E get(int index) {
         Node<E> result = this.first;
@@ -44,53 +44,5 @@ public class SimpleListContainer<E> implements Iterable<E> {
             throw new ArrayIndexOutOfBoundsException("Element does not exist yet.");
         }
         return result.data;
-    }
-
-    @Override
-    public Iterator<E> iterator() {
-        return new Iterator<>() {
-            final int iterableSize = size;
-            int iteratorPointer = 0;
-            Node<E> nextNode = first;
-
-            private void modifiedOrNot(int actualSize) {
-                if (iterableSize != actualSize) {
-                    throw new ConcurrentModificationException("Container has been changed!");
-                }
-            }
-
-            @Override
-            public boolean hasNext() {
-                modifiedOrNot(size);
-                return iteratorPointer < iterableSize;
-            }
-
-            @Override
-            @SuppressWarnings("unchecked")
-            public E next() {
-                modifiedOrNot(size);
-                if (!hasNext()) {
-                    throw new NoSuchElementException("Element not found");
-                }
-                if (iteratorPointer > 0) {
-                    nextNode = nextNode.next;
-                }
-                iteratorPointer++;
-                return (E) nextNode;
-            }
-        };
-    }
-
-    /**
-     * Класс предназначен для хранения данных.
-     */
-    static class Node<E> {
-        E data;
-        Node<E> next;
-        Node<E> previous;
-
-        Node(E data) {
-            this.data = data;
-        }
     }
 }

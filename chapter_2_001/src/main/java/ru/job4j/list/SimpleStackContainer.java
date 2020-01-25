@@ -6,7 +6,7 @@ package ru.job4j.list;
  * @version 1.0
  * @since 22.01.2020
  */
-public class SimpleStack<T> extends SimpleListContainer<T> {
+public class SimpleStackContainer<T> extends SimpleContainer<T> {
 
     /**
      * Возвращает значение первого элемента и удаляет его из коллекции

@@ -11,12 +11,12 @@ import java.util.NoSuchElementException;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-public class SimpleArrayContainerTest {
-    private SimpleArrayContainer<Integer> list;
+public class ListOnArrayContainerTest {
+    private ListOnArrayContainer<Integer> list;
 
     @Before
     public void beforeTest() {
-        list = new SimpleArrayContainer<>(3);
+        list = new ListOnArrayContainer<>(3);
         list.add(11);
         list.add(22);
         list.add(33);

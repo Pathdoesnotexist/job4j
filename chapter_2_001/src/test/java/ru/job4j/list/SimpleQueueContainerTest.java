@@ -22,9 +22,18 @@ public class SimpleQueueContainerTest {
     }
 
     @Test
-    public void whenPushElementThanPollIt() {
+    public void whenPushElementThanPollElement() {
         queue.push(1000);
         Assert.assertThat(queue.poll(), is(1));
+    }
+
+    @Test
+    public void whenPushElementThanPollAllElements() {
+        queue.push(1000);
+        queue.poll();
+        queue.poll();
+        queue.poll();
+        Assert.assertThat(queue.poll(), is(1000));
     }
 
     @Test
@@ -32,33 +41,5 @@ public class SimpleQueueContainerTest {
         Assert.assertThat(queue.poll(), is(1));
         Assert.assertThat(queue.poll(), is(2));
         Assert.assertThat(queue.poll(), is(3));
-    }
-
-    @Test (expected = ConcurrentModificationException.class)
-    public void whenCreateIteratorThenModifyList() {
-        Iterator<Object> iterator = queue.iterator();
-        queue.push(1000);
-        iterator.next();
-    }
-
-    @Test(expected = NoSuchElementException.class)
-    public void whenIterateUntilThrowsException() {
-        Iterator<Object> iterator = queue.iterator();
-        iterator.next();
-        iterator.next();
-        iterator.next();
-        iterator.next();
-    }
-
-    @Test
-    public void whenIterateUntilLast() {
-        Iterator<Object> iterator = queue.iterator();
-        Assert.assertTrue(iterator.hasNext());
-        iterator.next();
-        Assert.assertTrue(iterator.hasNext());
-        iterator.next();
-        Assert.assertTrue(iterator.hasNext());
-        iterator.next();
-        Assert.assertFalse(iterator.hasNext());
     }
 }

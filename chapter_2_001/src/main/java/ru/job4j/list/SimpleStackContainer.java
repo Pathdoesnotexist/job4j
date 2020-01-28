@@ -24,6 +24,4 @@ public class SimpleStackContainer<T> {
     public T poll() {
         return listContainer.deleteFirst();
     }
-
-
 }

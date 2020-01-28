@@ -9,12 +9,12 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 
-public class SetOnArrayContainerTest {
-    private SetOnArrayContainer<Integer> set;
+public class SimpleSetContainerTest {
+    private SimpleSetContainer<Integer> set;
 
     @Before
     public void beforeTest() {
-        set = new SetOnArrayContainer<>(3);
+        set = new SimpleSetContainer<>();
         set.add(11);
         set.add(22);
         set.add(33);

@@ -2,6 +2,7 @@ package ru.job4j.list;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ConcurrentModificationException;
@@ -32,33 +33,5 @@ public class SimpleStackContainerTest {
         Assert.assertThat(stack.poll(), is(3));
         Assert.assertThat(stack.poll(), is(2));
         Assert.assertThat(stack.poll(), is(1));
-    }
-
-    @Test (expected = ConcurrentModificationException.class)
-    public void whenCreateIteratorThenModifyList() {
-        Iterator<Object> iterator = stack.iterator();
-        stack.push(1000);
-        iterator.next();
-    }
-
-    @Test(expected = NoSuchElementException.class)
-    public void whenIterateUntilThrowsException() {
-        Iterator<Object> iterator = stack.iterator();
-        iterator.next();
-        iterator.next();
-        iterator.next();
-        iterator.next();
-    }
-
-    @Test
-    public void whenIterateUntilLast() {
-        Iterator<Object> iterator = stack.iterator();
-        Assert.assertTrue(iterator.hasNext());
-        iterator.next();
-        Assert.assertTrue(iterator.hasNext());
-        iterator.next();
-        Assert.assertTrue(iterator.hasNext());
-        iterator.next();
-        Assert.assertFalse(iterator.hasNext());
     }
 }

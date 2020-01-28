@@ -16,17 +16,35 @@ public class SimpleListContainerTest {
     @Before
     public void setUp() {
         listContainer = new SimpleListContainer<>();
-        listContainer.add("First");
-        listContainer.add(125);
-        listContainer.add(true);
-        listContainer.add('&');
-        listContainer.add(1.25);
+        listContainer.addLast("First");
+        listContainer.addLast(125);
+        listContainer.addLast(true);
+        listContainer.addLast('&');
+        listContainer.addLast(1.25);
     }
 
     @Test
-    public void whenAddElementThanGetIt() {
-        listContainer.add(1000);
+    public void whenAddLastElementThanGetLast() {
+        listContainer.addLast(1000);
         Assert.assertThat(listContainer.get(5), is(1000));
+    }
+
+    @Test
+    public void whenAddFirstElementThanGetFirst() {
+        listContainer.addFirst(1000);
+        Assert.assertThat(listContainer.get(0), is(1000));
+    }
+
+    @Test
+    public void whenDeleteFirstElementThanGetFirst() {
+        listContainer.deleteFirst();
+        Assert.assertThat(listContainer.get(0), is(125));
+    }
+
+    @Test
+    public void whenDeleteLastElementThanGetLast() {
+        listContainer.deleteLast();
+        Assert.assertThat(listContainer.get(3), is('&'));
     }
 
     @Test (expected = ArrayIndexOutOfBoundsException.class)
@@ -37,7 +55,7 @@ public class SimpleListContainerTest {
     @Test (expected = ConcurrentModificationException.class)
     public void whenCreateIteratorThenModifyList() {
         Iterator<Object> iterator = listContainer.iterator();
-        listContainer.add(1000);
+        listContainer.addLast(1000);
         iterator.next();
     }
 

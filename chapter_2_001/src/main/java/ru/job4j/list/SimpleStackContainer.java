@@ -6,39 +6,24 @@ package ru.job4j.list;
  * @version 1.0
  * @since 22.01.2020
  */
-public class SimpleStackContainer<T> extends SimpleContainer<T> {
-
-    /**
-     * Возвращает значение первого элемента и удаляет его из коллекции (LIFO)
-     * @return значение удаляемого элемента коллекции
-     */
-    public T poll() {
-        T result = first.data;
-        if (size == 1) {
-            last = null;
-            first = null;
-        } else {
-            first = first.next;
-            first.previous = null;
-        }
-        size--;
-        return result;
-    }
+public class SimpleStackContainer<T> {
+    private SimpleListContainer<T> listContainer = new SimpleListContainer<>();
 
     /**
      * Помещает значение в начало коллекции
      * @param value добавляемое в коллекцию значение
      */
     public void push(T value) {
-        Node<T> newFirst = new Node<>(value);
-        if (size == 0) {
-            first = newFirst;
-            last = newFirst;
-        } else {
-            first.previous = newFirst;
-            newFirst.next = first;
-            first = newFirst;
-        }
-        this.size++;
+        listContainer.addFirst(value);
     }
+
+    /**
+     * Возвращает значение первого элемента и удаляет его из коллекции (LIFO)
+     * @return значение удаляемого элемента коллекции
+     */
+    public T poll() {
+        return listContainer.deleteFirst();
+    }
+
+
 }

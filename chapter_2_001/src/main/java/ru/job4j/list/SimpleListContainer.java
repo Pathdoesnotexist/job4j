@@ -16,19 +16,71 @@ public class SimpleListContainer<E> implements Iterable<E> {
     private int size = 0;
 
     /**
-     * Метод вставляет в начало списка данные.
+     * Добавление данных в конец коллекции
+     * @param value добавляемые данные
      */
-    public void add(E data) {
-        Node<E> newNode = new Node<>(data);
+    public void addLast(E value) {
+        Node<E> newNode = new Node<>(value);
         if (size == 0) {
-            this.head = newNode;
-            this.tail = newNode;
+            head = newNode;
+            tail = newNode;
         } else {
             newNode.previous = this.tail;
-            this.tail.next = newNode;
-            this.tail = newNode;
+            tail.next = newNode;
+            tail = newNode;
         }
-        this.size++;
+        size++;
+    }
+
+    /**
+     * Добавление данных в начало коллекции
+     * @param value добавляемые данные
+     */
+    public void addFirst(E value) {
+        Node<E> newFirst = new Node<>(value);
+        if (size == 0) {
+            head = newFirst;
+            tail = newFirst;
+        } else {
+            head.previous = newFirst;
+            newFirst.next = head;
+            head = newFirst;
+        }
+        size++;
+    }
+
+    /**
+     * Возвращает значение первого элемента и удаляет его из коллекции
+     * @return значение удаляемого элемента коллекции
+     */
+    public E deleteFirst() {
+        E result = head.data;
+        if (size == 1) {
+            tail = null;
+            head = null;
+        } else {
+            head = head.next;
+            head.previous = null;
+        }
+        size--;
+        return result;
+    }
+
+    /**
+     * Возвращает значение последнего элемента и удаляет его из коллекции
+     * @return значение удаляемого элемента коллекции
+     */
+    public E deleteLast() {
+        E result = tail.data;
+        if (size == 1) {
+            tail = null;
+            head = null;
+        } else {
+            tail = tail.previous;
+            tail.next = null;
+        }
+        size--;
+        return result;
     }
 
     /**

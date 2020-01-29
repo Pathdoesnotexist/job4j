@@ -26,6 +26,6 @@ public class UserTest {
         map.put(user2, 10002);
         System.out.println(map);
         System.out.println(user1.equals(user2));
-        Assert.assertThat(map.size(), is(2));
+        Assert.assertThat(map.size(), is(1));
     }
 }

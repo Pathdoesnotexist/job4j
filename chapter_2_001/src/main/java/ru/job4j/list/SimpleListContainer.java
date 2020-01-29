@@ -119,7 +119,6 @@ public class SimpleListContainer<E> implements Iterable<E> {
             @Override
             @SuppressWarnings("unchecked")
             public E next() {
-                modifiedOrNot(size);
                 if (!hasNext()) {
                     throw new NoSuchElementException("Element not found");
                 }

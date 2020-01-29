@@ -10,18 +10,18 @@ public class SimpleStackContainer<T> {
     private SimpleListContainer<T> listContainer = new SimpleListContainer<>();
 
     /**
-     * Помещает значение в начало коллекции
+     * Помещает значение в конец коллекции
      * @param value добавляемое в коллекцию значение
      */
     public void push(T value) {
-        listContainer.addFirst(value);
+        listContainer.addLast(value);
     }
 
     /**
-     * Возвращает значение первого элемента и удаляет его из коллекции (LIFO)
+     * Возвращает значение последнего добавленного элемента и удаляет его из коллекции (LIFO)
      * @return значение удаляемого элемента коллекции
      */
     public T poll() {
-        return listContainer.deleteFirst();
+        return listContainer.deleteLast();
     }
 }

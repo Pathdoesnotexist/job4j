@@ -18,16 +18,22 @@ public class SimpleSetContainer<E> {
      * @param value добавляемый элемент
      */
     public boolean add(E value) {
-        boolean result = true;
+        boolean result = false;
+        if (!contains(value)) {
+            container.add(value);
+            result = true;
+        }
+        return result;
+    }
+
+    private boolean contains(E value) {
+        boolean result = false;
         Iterator<E> iterator = iterator();
         while (iterator.hasNext()) {
             if (iterator.next().equals(value)) {
-                result = false;
+                result = true;
                 break;
             }
-        }
-        if (result) {
-            container.add(value);
         }
         return result;
     }

@@ -1,14 +1,21 @@
 package ru.job4j.list;
 
-public class SimpleQueueContainer<T> extends SimpleStackContainer<T> {
-    private SimpleListContainer<T> listContainer = new SimpleListContainer<>();
+/**
+ * Простая очередь на базе связанного списка
+ * @author Andrey Varshavsky
+ * @version 1.1
+ * @since 30.01.2020
+ */
+public class SimpleQueueContainer<T> {
+    private SimpleListContainer<T> defaultContainer = new SimpleListContainer<>();
+    private SimpleListContainer<T> reversedContainer = new SimpleListContainer<>();
 
     /**
      * Помещает значение в начало коллекции
      * @param value добавляемое в коллекцию значение
      */
     public void push(T value) {
-        listContainer.addFirst(value);
+        defaultContainer.addFirst(value);
     }
 
     /**
@@ -16,6 +23,15 @@ public class SimpleQueueContainer<T> extends SimpleStackContainer<T> {
      * @return значение удаляемого элемента коллекции
      */
     public T poll() {
-        return listContainer.deleteLast();
+        T result;
+        int newSize = defaultContainer.getSize() - 1;
+        for (int i = 0; i < newSize; i++) {
+            reversedContainer.addFirst(defaultContainer.deleteFirst());
+        }
+        result = defaultContainer.deleteFirst();
+        for (int i = 0; i < newSize; i++) {
+            defaultContainer.addFirst(reversedContainer.deleteFirst());
+        }
+        return result;
     }
 }

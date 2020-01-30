@@ -15,6 +15,10 @@ public class SimpleListContainer<E> implements Iterable<E> {
     private Node<E> tail;
     private int size = 0;
 
+    public int getSize() {
+        return size;
+    }
+
     /**
      * Добавление данных в конец коллекции
      * @param value добавляемые данные

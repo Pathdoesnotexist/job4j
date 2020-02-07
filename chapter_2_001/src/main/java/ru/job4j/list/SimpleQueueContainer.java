@@ -23,15 +23,12 @@ public class SimpleQueueContainer<T> {
      * @return значение удаляемого элемента коллекции
      */
     public T poll() {
-        T result;
-        int newSize = defaultContainer.getSize() - 1;
-        for (int i = 0; i < newSize; i++) {
-            reversedContainer.addFirst(defaultContainer.deleteFirst());
+        if (reversedContainer.getSize() == 0) {
+            int count = defaultContainer.getSize();
+            for (int i = 0; i < count; i++) {
+                reversedContainer.addFirst(defaultContainer.deleteFirst());
+            }
         }
-        result = defaultContainer.deleteFirst();
-        for (int i = 0; i < newSize; i++) {
-            defaultContainer.addFirst(reversedContainer.deleteFirst());
-        }
-        return result;
+        return reversedContainer.deleteFirst();
     }
 }

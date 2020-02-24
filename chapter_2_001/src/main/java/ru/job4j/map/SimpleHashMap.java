@@ -8,8 +8,8 @@ import java.util.NoSuchElementException;
 /**
  * Ассоциативный массив на базе хэш-таблицы
  * @author Andrey Varshavsky
- * @version 0.9
- * @since 07.02.2020
+ * @version 1.0
+ * @since 24.02.2020
  */
 
 public class SimpleHashMap<K, V> implements Iterable<V> {
@@ -36,13 +36,12 @@ public class SimpleHashMap<K, V> implements Iterable<V> {
             threshold *= 2;
         }
         Node<K, V> newNode = new Node<>(key, value);
-        int index = indexFor(newNode.hashCode());
-        System.out.println("для пары " + newNode.toString() + " выбран индекс: " + index); ///////////////////////////////////////////////////
+        int index = indexFor(key);
         if (hashTable[index] == null) {
             hashTable[index] = newNode;
             valuableSize++;
             result = true;
-        } else if (newNode.getKey() == null || newNode.equals(hashTable[index])) {
+        } else if (key == null || key.equals(hashTable[index].getKey())) {
             hashTable[index] = newNode;
             result = true;
         }
@@ -56,7 +55,7 @@ public class SimpleHashMap<K, V> implements Iterable<V> {
         Node<K, V>[] newHashTable = new Node[hashTable.length * 2];
         for (Node<K, V> node : hashTable) {
             if (node != null) {
-                newHashTable[indexFor(node.hashCode())] = node;
+                newHashTable[indexFor(node.getKey())] = node;
             }
         }
         hashTable = newHashTable;
@@ -65,25 +64,30 @@ public class SimpleHashMap<K, V> implements Iterable<V> {
      * Определение индекса корзины в таблице для новой ноды
      * @return индекс корзины
      */
-    private int indexFor(int h) {
-        if (h == 0) {
-            return 0;
-        } else {
+    private int indexFor(K key) {
+        int h = 0;
+        if (key != null) {
+            h = 37;
+            h = h * 29 + key.hashCode();
+            h = h * 29;
             h ^= (h >>> 20) ^ (h >>> 12);
-            return Math.abs(h % hashTable.length);
+            h = Math.abs(h % hashTable.length);
         }
+        return h;
     }
+
     /**
      * Получение значения по ключу
      * @param key ключ значения, которое необходимо получить
      * @return значение
      */
-    public V get(K key) throws Exception {
-        int index = indexByKey(key);
-        if (index < 0) {
-            throw new Exception("The key does not exist!");
+    public V get(K key) {
+        V result = null;
+        int index = indexFor(key);
+        if (index < hashTable.length && hashTable[index] != null && (key == null || key.equals(hashTable[index].getKey()))) {
+            result  = hashTable[index].getValue();
         }
-        return hashTable[index].getValue();
+        return result;
     }
     /**
      * Удаление пары "ключ-значение" по ключу
@@ -92,28 +96,15 @@ public class SimpleHashMap<K, V> implements Iterable<V> {
      */
     public boolean delete(K key) {
         boolean result = false;
-        int index = indexByKey(key);
-        if (index >= 0) {
+        int index = indexFor(key);
+        if (index < hashTable.length && hashTable[index] != null && (key == null || key.equals(hashTable[index].getKey()))) {
             hashTable[index] = null;
             valuableSize--;
             result = true;
         }
         return result;
     }
-    /**
-     * Получение индекса ноды по ключу
-     * @param key ключ ноды
-     * @return индекс или -1
-     */
-    private int indexByKey(K key) {
-        Node<K, V> node = new Node<>(key, null);
-        int index = indexFor(node.hashCode());
-        if (hashTable[index] != null && hashTable[index].equals(node)) {
-            return index;
-        } else {
-            return -1;
-        }
-    }
+
     /**
      * Нода для хранения пары "ключ-значение"
      * @param <K> ключ
@@ -134,36 +125,6 @@ public class SimpleHashMap<K, V> implements Iterable<V> {
 
         public V getValue() {
             return value;
-        }
-
-        @Override
-        public int hashCode() {
-            if (key == null) {
-                return 0;
-            } else {
-                int hash = 37;
-                hash = hash * 29 + key.hashCode();
-                return hash * 29;
-            }
-        }
-
-        @SuppressWarnings("unchecked")
-        @Override
-        public boolean equals(Object obj) {
-            if (obj == null) {
-                return false;
-            } else if (this == obj) {
-                return true;
-            } else if (this.getClass().equals(obj.getClass())) {
-                Node<K, V> nodeObj = (Node<K, V>) obj;
-                return this.key.equals(nodeObj.key);
-            }
-            return false;
-        }
-
-        @Override
-        public String toString() {
-            return "Key: " + key + " Value:" + value;
         }
     }
 

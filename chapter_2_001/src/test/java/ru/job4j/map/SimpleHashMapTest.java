@@ -16,14 +16,14 @@ public class SimpleHashMapTest {
  SimpleHashMap<String, Integer> map = new SimpleHashMap<>();
 
     @Test
-    public void whenAddKeyThenGetItValue() throws Exception {
+    public void whenAddKeyThenGetItValue() {
         Assert.assertTrue(map.insert("KEY ONE", 1));
         Assert.assertTrue(map.insert("KEY TWO", 2));
         Assert.assertTrue(map.insert("KEY THREE", 3));
         Assert.assertThat(map.get("KEY ONE"), is(1));
     }
     @Test
-    public void whenAddEntryThenRewriteIt() throws Exception {
+    public void whenAddEntryThenRewriteIt() {
         map.insert("KEY ONE", 1);
         map.insert("KEY TWO", 2);
         map.insert("KEY THREE", 3);
@@ -52,14 +52,6 @@ public class SimpleHashMapTest {
         Assert.assertTrue(map.insert("Q", 17));
     }
 
-    @Test (expected = Exception.class)
-    public void whenGetNotExistedKeyThrowException() throws Exception {
-        map.insert("KEY ONE", 1);
-        map.insert("KEY TWO", 2);
-        map.insert("KEY THREE", 3);
-        map.get("KEY TWELVE");
-    }
-
     @Test
     public void whenDeleteExistedKeyReturnsTrue() {
         map.insert("KEY ONE", 1);
@@ -76,13 +68,13 @@ public class SimpleHashMapTest {
         Assert.assertFalse(map.delete("KEY TWELVE"));
     }
 
-    @Test  (expected = Exception.class)
-    public void whenDeleteExistedKeyThenTryToGetItThrowException() throws Exception {
+    @Test
+    public void whenAddTwoThenTryToGetNotExistedReturnNull() {
         map.insert("KEY ONE", 1);
         map.insert("KEY TWO", 2);
-        map.insert("KEY THREE", 3);
-        map.delete("KEY THREE");
-        map.get("KEY TWELVE");
+        Assert.assertNull(map.get("KEY TWELVE"));
+        Assert.assertNull(map.get("aabb"));
+        Assert.assertNull(map.get("bbaavb"));
     }
 
     @Test (expected = ConcurrentModificationException.class)

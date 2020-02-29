@@ -14,13 +14,15 @@ import java.util.NoSuchElementException;
 
 public class SimpleHashMap<K, V> implements Iterable<V> {
     private Node<K, V>[] hashTable;
-    private float threshold;
+    private double threshold;
     private int valuableSize = 0;
+
 
     @SuppressWarnings("unchecked")
     public SimpleHashMap() {
+        final double loadFactor = 0.75;
         this.hashTable = new Node[16];
-        this.threshold = hashTable.length * 0.75f;
+        this.threshold = hashTable.length * loadFactor;
     }
 
     /**
@@ -84,7 +86,7 @@ public class SimpleHashMap<K, V> implements Iterable<V> {
     public V get(K key) {
         V result = null;
         int index = indexFor(key);
-        if (index < hashTable.length && hashTable[index] != null && (key == null || key.equals(hashTable[index].getKey()))) {
+        if (hashTable[index] != null && (key == null || key.equals(hashTable[index].getKey()))) {
             result  = hashTable[index].getValue();
         }
         return result;
@@ -97,7 +99,7 @@ public class SimpleHashMap<K, V> implements Iterable<V> {
     public boolean delete(K key) {
         boolean result = false;
         int index = indexFor(key);
-        if (index < hashTable.length && hashTable[index] != null && (key == null || key.equals(hashTable[index].getKey()))) {
+        if (hashTable[index] != null && (key == null || key.equals(hashTable[index].getKey()))) {
             hashTable[index] = null;
             valuableSize--;
             result = true;

@@ -13,6 +13,7 @@ import java.util.NoSuchElementException;
  */
 
 public class SimpleHashMap<K, V> implements Iterable<V> {
+    private static final double loadFactor = 0.75;
     private Node<K, V>[] hashTable;
     private double threshold;
     private int valuableSize = 0;
@@ -20,7 +21,6 @@ public class SimpleHashMap<K, V> implements Iterable<V> {
 
     @SuppressWarnings("unchecked")
     public SimpleHashMap() {
-        final double loadFactor = 0.75;
         this.hashTable = new Node[16];
         this.threshold = hashTable.length * loadFactor;
     }
@@ -35,7 +35,6 @@ public class SimpleHashMap<K, V> implements Iterable<V> {
         boolean result = false;
         if (valuableSize + 1 >= threshold) {
             expandHashTable();
-            threshold *= 2;
         }
         Node<K, V> newNode = new Node<>(key, value);
         int index = indexFor(key);
@@ -61,6 +60,7 @@ public class SimpleHashMap<K, V> implements Iterable<V> {
             }
         }
         hashTable = newHashTable;
+        threshold = hashTable.length * loadFactor;
     }
     /**
      * Определение индекса корзины в таблице для новой ноды

@@ -9,7 +9,7 @@ import java.util.*;
  * @since 28.02.2020
  */
 
-class Tree<E> implements SimpleTree<E> {
+class Tree<E extends Comparable<E>> implements SimpleTree<E> {
     private final Node<E> root;
 
     Tree(final E value) {
@@ -23,13 +23,12 @@ class Tree<E> implements SimpleTree<E> {
      */
     @Override
     public boolean add(E parent, E child) {
-        boolean rsl = true;
+        boolean rsl = false;
         Optional<Node<E>> parentNode = findBy(parent);
         Optional<Node<E>> childNode = findBy(child);
-        if (parentNode.isEmpty() || childNode.isPresent()) {
-            rsl = false;
-        } else {
+        if (parentNode.isPresent() && childNode.isEmpty()) {
             parentNode.get().children.add(new Node<>(child));
+            rsl = true;
         }
         return rsl;
     }

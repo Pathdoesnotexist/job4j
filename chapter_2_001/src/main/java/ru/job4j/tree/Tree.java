@@ -9,12 +9,33 @@ import java.util.*;
  * @since 28.02.2020
  */
 
-class Tree<E extends Comparable<E>> implements SimpleTree<E> {
+class Tree<E> implements SimpleTree<E> {
     private final Node<E> root;
 
     Tree(final E value) {
         this.root = new Node<>(value);
     }
+
+    /**
+     * Проверка дерева на то, бинарное ли оно
+     * @return результат проверки
+     */
+    public boolean isBinary() {
+        boolean result = true;
+        List<Node<E>> nodeList = new ArrayList<>();
+        nodeList.add(root);
+        int i = 0;
+        while (i < nodeList.size()) {
+            if (nodeList.get(i).children.size() > 2) {
+                result = false;
+                break;
+            }
+            nodeList.addAll(nodeList.get(i).children);
+            i++;
+        }
+        return result;
+    }
+
     /**
      * Метод добавления дочерней ноды в выбранную родительскую
      * @param parent родительская нода

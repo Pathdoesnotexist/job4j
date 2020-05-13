@@ -16,9 +16,18 @@ public class FreezeStrTest {
     public void whenNotEq() {
         assertThat(FreezeStr.eq("Hello", "Halle"), is(false));
     }
+    @Test
+    public void whenSizeNotEq() {
+        assertThat(FreezeStr.eq("Hello", "Hall"), is(false));
+    }
 
     @Test
     public void whenNotMultiEq() {
         assertThat(FreezeStr.eq("heloo", "hello"), is(false));
+    }
+
+    @Test
+    public void whenMirroredEq() {
+        assertThat(FreezeStr.eq("Oooohhhh", "hhhhoooO"), is(true));
     }
 }

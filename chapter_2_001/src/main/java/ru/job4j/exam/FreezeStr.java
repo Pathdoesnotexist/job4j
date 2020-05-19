@@ -6,21 +6,18 @@ public class FreezeStr {
     public static boolean eq(String left, String right) {
         boolean result = false;
         if (left.length() == right.length()) {
-            char[] leftCharArr = left.toCharArray();
-            char[] rightCharArr = right.toCharArray();
             Map<Character, Integer> leftMap = new HashMap<>();
             Map<Character, Integer> rightMap = new HashMap<>();
-
-            for (int i = 0; i < leftCharArr.length; i++) {
-                if (leftMap.containsKey(leftCharArr[i])) {
-                    leftMap.put(leftCharArr[i], leftMap.get(leftCharArr[i]) + 1);
+            for (int i = 0; i < left.length(); i++) {
+                if (leftMap.containsKey(left.charAt(i))) {
+                    leftMap.put(left.charAt(i), leftMap.get(left.charAt(i)) + 1);
                 } else {
-                    leftMap.put(leftCharArr[i], 1);
+                    leftMap.put(left.charAt(i), 1);
                 }
-                if (rightMap.containsKey(rightCharArr[i])) {
-                    rightMap.put(rightCharArr[i], rightMap.get(rightCharArr[i]) + 1);
+                if (rightMap.containsKey(right.charAt(i))) {
+                    rightMap.put(right.charAt(i), rightMap.get(right.charAt(i)) + 1);
                 } else {
-                    rightMap.put(rightCharArr[i], 1);
+                    rightMap.put(right.charAt(i), 1);
                 }
             }
             result = leftMap.equals(rightMap);

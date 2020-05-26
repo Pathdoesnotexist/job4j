@@ -19,16 +19,23 @@ public class Config {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(path));
             List<String> pair;
             for (String line = bufferedReader.readLine(); line != null; line = bufferedReader.readLine()) {
-                pair = Arrays.asList(line.split("="));
-                values.put(pair.get(0), pair.get(1));
+                if (!line.isEmpty() && (line.charAt(0) != '#' || line.charAt(1) != '#')) {
+                    pair = Arrays.asList(line.split("="));
+                    values.put(pair.get(0), pair.get(1));
+                }
             }
 
 //            Scanner scanner = new Scanner(new FileReader(path));
 //            List<String> pair;
-//            while (scanner.hasNextLine()) {
-//                pair = Arrays.asList(scanner.nextLine().split("="));
-//                values.put(pair.get(0), pair.get(1));
-//          }
+//            for (String line = scanner.nextLine(); line != null; line = scanner.nextLine()) {
+//                if (!line.isBlank() && (line.charAt(0) != '#' || line.charAt(1) != '#') ) {
+//                    pair = Arrays.asList(line.split("="));
+//                    values.put(pair.get(0), pair.get(1));
+//                }
+//                if(!scanner.hasNextLine()) {
+//                    break;
+//                }
+//            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -40,7 +47,6 @@ public class Config {
      * @return значение параметра по имени
      */
     public String value(String key) {
-//        throw new UnsupportedOperationException("Don't impl this method yet!");
         return this.values.get(key);
     }
 
@@ -56,10 +62,9 @@ public class Config {
     }
 
     public static void main(String[] args) {
-        Config wrap = new Config("./chapter_2_002/data/app.properties");
+        Config wrap = new Config("./chapter_2_002/data/pair_with_comments.properties");
         System.out.println(wrap);
         wrap.load();
         System.out.println(wrap.values.toString());
-
     }
 }

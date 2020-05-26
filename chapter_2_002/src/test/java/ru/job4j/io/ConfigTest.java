@@ -17,6 +17,21 @@ public class ConfigTest {
                 is("Petr Arsentev")
         );
     }
+
+    public void whenPairWithComment() {
+        String path = "./data/pair_with_comments.properties";
+        Config config = new Config(path);
+        config.load();
+        assertThat(
+                config.value("surname"),
+                is("Ivanov")
+        );
+        assertThat(
+                config.value("#paragraph"),
+                is("14")
+        );
+    }
+
     @Test
     public void whenAppProperties() {
         String path = "./data/app.properties";

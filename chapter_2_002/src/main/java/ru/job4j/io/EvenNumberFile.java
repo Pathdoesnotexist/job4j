@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class EvenNumberFile {
     public static void main(String[] args) {
         int pointer;
-            try (Scanner scanner = new Scanner(new FileInputStream("even.txt"))) {
+            try (Scanner scanner = new Scanner(new FileInputStream("./chapter_2_001/data/even.txt"))) {
                 while (scanner.hasNext()) {
                     pointer = scanner.nextInt();
                     System.out.println(pointer + ": четное? " + (pointer % 2 == 0));

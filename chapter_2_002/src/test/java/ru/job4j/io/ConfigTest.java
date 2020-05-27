@@ -18,6 +18,7 @@ public class ConfigTest {
         );
     }
 
+    @Test
     public void whenPairWithComment() {
         String path = "./data/pair_with_comments.properties";
         Config config = new Config(path);
@@ -27,7 +28,7 @@ public class ConfigTest {
                 is("Ivanov")
         );
         assertThat(
-                config.value("#paragraph"),
+                config.value("paragraph"),
                 is("14")
         );
     }

@@ -14,21 +14,18 @@ public class Config {
      * Загрузка файла настроек в карту
      */
     public void load() {
-        try {
-
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(path));
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(path))) {
             List<String> pair;
             for (String line = bufferedReader.readLine(); line != null; line = bufferedReader.readLine()) {
-                if (!line.isEmpty() && (line.charAt(0) != '#' || line.charAt(1) != '#')) {
+                if (!line.isEmpty() && (line.charAt(0) != '#')) {
                     pair = Arrays.asList(line.split("="));
                     values.put(pair.get(0), pair.get(1));
                 }
             }
-
-//            Scanner scanner = new Scanner(new FileReader(path));
+//            try (Scanner scanner = new Scanner(new FileReader(path))) {
 //            List<String> pair;
 //            for (String line = scanner.nextLine(); line != null; line = scanner.nextLine()) {
-//                if (!line.isBlank() && (line.charAt(0) != '#' || line.charAt(1) != '#') ) {
+//                if (!line.isBlank() && (line.charAt(0) != '#')) {
 //                    pair = Arrays.asList(line.split("="));
 //                    values.put(pair.get(0), pair.get(1));
 //                }

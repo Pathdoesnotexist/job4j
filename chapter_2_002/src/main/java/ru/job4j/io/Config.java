@@ -19,7 +19,9 @@ public class Config {
             for (String line = bufferedReader.readLine(); line != null; line = bufferedReader.readLine()) {
                 if (!line.isEmpty() && (line.charAt(0) != '#')) {
                     pair = Arrays.asList(line.split("="));
-                    values.put(pair.get(0), pair.get(1));
+                    if (pair.size() > 1) {
+                        values.put(pair.get(0), pair.get(1));
+                    }
                 }
             }
 //            try (Scanner scanner = new Scanner(new FileReader(path))) {

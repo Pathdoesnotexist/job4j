@@ -21,6 +21,8 @@ public class Config {
                     pair = Arrays.asList(line.split("="));
                     if (pair.size() > 1) {
                         values.put(pair.get(0), pair.get(1));
+                    } else {
+                        values.put(pair.get(0), null);
                     }
                 }
             }

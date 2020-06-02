@@ -19,11 +19,10 @@ public class Config {
             for (String line = bufferedReader.readLine(); line != null; line = bufferedReader.readLine()) {
                 if (!line.isEmpty() && (line.charAt(0) != '#')) {
                     pair = Arrays.asList(line.split("="));
-                    if (pair.size() > 1) {
-                        values.put(pair.get(0), pair.get(1));
-                    } else {
-                        values.put(pair.get(0), null);
+                    if (pair.size() != 2) {
+                        throw new IllegalArgumentException("Data doest match key=value pattern!");
                     }
+                        values.put(pair.get(0), pair.get(1));
                 }
             }
 //            try (Scanner scanner = new Scanner(new FileReader(path))) {

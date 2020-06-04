@@ -1,16 +1,35 @@
 package ru.job4j.io;
 
 import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
-import java.io.BufferedReader;
+import java.io.*;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import java.io.FileReader;
-import java.io.IOException;
 
 public class AnalyzeTest {
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
+
+    @Test
+    public void whenUsingTemporaryFolder() throws IOException {
+        File source = folder.newFile("source.txt");
+        File target = folder.newFile("target.csv");
+        try (PrintWriter out = new PrintWriter(source)) {
+            out.println("200 10:56:01\n400 10:58:13\n200 10:59:24");
+        }
+        Analyze wrap = new Analyze();
+        wrap.unavailable(source.getAbsolutePath(), target.getAbsolutePath());
+        StringBuilder rsl = new StringBuilder();
+        try (BufferedReader in = new BufferedReader(new FileReader(target))) {
+            in.lines().forEach(rsl::append);
+        }
+        assertThat(rsl.toString(), is("10:58:13;10:59:24"));
+
+    }
 
     @Test
     public void whenLogFromTestSource() throws IOException {

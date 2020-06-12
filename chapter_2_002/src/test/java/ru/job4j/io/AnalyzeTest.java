@@ -19,7 +19,7 @@ public class AnalyzeTest {
         File source = folder.newFile("source.txt");
         File target = folder.newFile("target.csv");
         try (PrintWriter out = new PrintWriter(source)) {
-            out.println("200 10:56:01\n400 10:58:13\n200 10:59:24");
+            out.println("200 10:56:01" + System.lineSeparator() + "400 10:58:13" + System.lineSeparator() + "200 10:59:24");
         }
         Analyze wrap = new Analyze();
         wrap.unavailable(source.getAbsolutePath(), target.getAbsolutePath());
